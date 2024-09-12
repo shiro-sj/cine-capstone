@@ -1,34 +1,133 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native'
+import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { LinearGradient } from 'expo-linear-gradient'
+import Animated, { useSharedValue, withSpring } from 'react-native-reanimated'
+import logo from '../assets/logo.png'
 
-export default function Page() {
+export default function Onboarding() {
+
+
+  // const width = useSharedValue(100);
+
+  // const handlePress = () => {
+  //   width.value = withSpring(width.value + 50);
+
   return (
     <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
-      </View>
+      <LinearGradient
+      colors={["#060606", "#1D1E18" ]}
+      style={styles.backgroundGradient}>
+        <LinearGradient
+          colors={["#1B065E", "#FF4E00" ]}
+          locations={[0.4,0.9]}
+          style={styles.topArea}/>
+                <View style={styles.background}>
+
+        <View style={styles.logoContainer}>
+          <Image style={styles.logo} source={logo}/>
+        </View>
+
+        <View style={styles.info}>
+          <Text style={styles.title}>cine</Text>
+          <Text style={styles.subtitle}>View watch histories and more.</Text>
+        </View>
+
+        <View style={styles.login}>
+            <Text style={styles.loginText}>Already have an account? <TouchableOpacity ><Text style={styles.loginTextButton}>Login</Text></TouchableOpacity></Text>
+          </View>
+
+          <TouchableOpacity style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>Get Started</Text>
+          </TouchableOpacity>
+
+        </View>
+      </LinearGradient>
     </View>
-  );
+
+
+  //   <View style={{ flex: 1, alignItems: 'center' }}>
+  //   <Animated.View
+  //     style={{
+  //       width,
+  //       height: 100,
+  //       backgroundColor: 'violet',
+  //     }}
+  //   />
+  //   <Button onPress={handlePress} title="Click me" />
+  // </View>
+   
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container:{
     flex: 1,
-    alignItems: "center",
-    padding: 24,
+    justifyContent:'center'
   },
-  main: {
+  logo:{
+    width:200,
+    height:200,
+  },
+  logoContainer:{
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  backgroundGradient:{
     flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
+  },
+  background:{
+    marginBottom:50
+  },
+  topArea:{
+    height:350,
+    borderBottomEndRadius: 200,
+  },
+  info:{
+    justifyContent:'center', 
+    alignItems:'center',
+    paddingBottom: 80 , 
   },
   title: {
-    fontSize: 64,
-    fontWeight: "bold",
+    color: 'white',
+    fontSize: 100,
+    fontFamily: 'Georgia',
+    fontWeight: 'medium',
+    textShadowColor: 'black', 
+    textShadowOffset: { width: 2, height: 2 }, 
+    textShadowRadius: 20, 
   },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
+  subtitle:{
+    color:'white',
+    fontFamily:'Inter',
+    fontSize:15
+    },
+  buttonContainer:{
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor: "#1B065E",
+    borderRadius:100,
+    marginHorizontal:50,
   },
-});
+  buttonText:{
+    padding:15,
+    color:"white",
+    fontSize:20
+  },
+  login:{
+    justifyContent:'center',
+    alignItems:'center',
+    padding:10
+  },
+  loginText:{
+    color:'white',
+    fontSize:13,
+    fontFamily:'Inter'
+  },
+
+  loginTextButton:{
+    color:'#1B065E',
+    fontSize:15,
+    fontFamily:'Inter'
+  },
+})
