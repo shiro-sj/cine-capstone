@@ -1,12 +1,17 @@
-import { View, Text } from 'react-native'
+import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const HomeHeader = () => {
-  return (
-    <View>
-      <Text>HomeHeader</Text>
-    </View>
-  )
+const HomeHeader = ({TitleName}) => {
+    return (
+            <View style = {styles.container}>
+                <Text>{TitleName}</Text>
+            </View>
+    )
 }
 
 export default HomeHeader
+
+const styles = StyleSheet.create({
+    container:{
+    }
+})
