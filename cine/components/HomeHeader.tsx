@@ -4,7 +4,7 @@ import React from 'react'
 const HomeHeader = ({TitleName}) => {
     return (
             <View style = {styles.container}>
-                <Text>{TitleName}</Text>
+                <Text style = {styles.text}>{TitleName}</Text>
             </View>
     )
 }
@@ -13,5 +13,14 @@ export default HomeHeader
 
 const styles = StyleSheet.create({
     container:{
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+
+    text:{
+        color:'white',
+        fontFamily: 'Inter',
+        fontSize: 20
     }
 })
