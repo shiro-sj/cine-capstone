@@ -1,9 +1,8 @@
 import { Button, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
-import Animated, { useSharedValue, withSpring } from 'react-native-reanimated'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.png';
+import { Link } from 'expo-router';
 
 export default function Onboarding() {
 
@@ -22,7 +21,8 @@ export default function Onboarding() {
           colors={["#1B065E", "#FF4E00" ]}
           locations={[0.4,0.9]}
           style={styles.topArea}/>
-                <View style={styles.background}>
+
+        <View style={styles.background}>
 
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={logo}/>
@@ -34,11 +34,13 @@ export default function Onboarding() {
         </View>
 
         <View style={styles.login}>
-            <Text style={styles.loginText}>Already have an account? <TouchableOpacity ><Text style={styles.loginTextButton}>Login</Text></TouchableOpacity></Text>
+            <Text style={styles.loginText}>Already have an account?<Link href="/login/Login"><Text>Login</Text></Link></Text>
           </View>
 
           <TouchableOpacity style={styles.buttonContainer}>
+            <Link href="/Onboarding">
             <Text style={styles.buttonText}>Get Started</Text>
+            </Link>
           </TouchableOpacity>
 
         </View>
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
   },
   topArea:{
     height:350,
-    borderBottomEndRadius: 200,
+    borderBottomEndRadius:200,
   },
   info:{
     justifyContent:'center', 
