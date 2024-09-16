@@ -9,8 +9,20 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 const Home = () => {
   return (
+<<<<<<< Updated upstream
     <SafeAreaView style={styles.container}>
       <View >
+=======
+    <SafeAreaView>
+      <View>
+        
+        
+
+      </View>
+
+      <HomeHeader TitleName={'test title'} />
+      <HomeWidget widgetName={'test'} />
+>>>>>>> Stashed changes
 
         <LinearGradient
           colors={["#1B065E", "#FF4E00"]}
@@ -18,6 +30,7 @@ const Home = () => {
           style={styles.topArea}
         >
 
+<<<<<<< Updated upstream
           <Text style={styles.title}>Welcome Name</Text>
           <Text style={styles.subtitle}>What are we watching next</Text>
 
@@ -34,6 +47,9 @@ const Home = () => {
           {/* <Button onPress={()=> FIREBASE_AUTH.signOut()} title='Logout'/> */}
         </View>
       </View>
+=======
+      {/* <Button onPress={()=> FIREBASE_AUTH.signOut()} title='Logout'/> */}
+>>>>>>> Stashed changes
     </SafeAreaView>
   )
 }
@@ -42,6 +58,7 @@ export default Home
 
 const styles = StyleSheet.create({
 
+<<<<<<< Updated upstream
   container: {
     // backgroundColor: '#060606',
     height: '100%',
@@ -71,4 +88,13 @@ const styles = StyleSheet.create({
     paddingRight:20
   }
 
+=======
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 300,
+  },
+>>>>>>> Stashed changes
 })
