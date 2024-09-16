@@ -34,12 +34,12 @@ export default function Onboarding() {
         </View>
 
         <View style={styles.login}>
-            <Text style={styles.loginText}>Already have an account?<Link href="/login/Login"><Text>Login</Text></Link></Text>
+            <Text style={styles.loginText}>Already have an account?<Link href="/Login/Login"><Text style={styles.loginTextButton}>  Login</Text></Link></Text>
           </View>
 
           <TouchableOpacity style={styles.buttonContainer}>
-            <Link href="/Onboarding">
-            <Text style={styles.buttonText}>Get Started</Text>
+            <Link href="/Onboarding" style={styles.buttonText}>
+            <Text>Get Started</Text>
             </Link>
           </TouchableOpacity>
 
@@ -128,8 +128,10 @@ const styles = StyleSheet.create({
   },
 
   loginTextButton:{
-    color:'#1B065E',
+    color:'white',
     fontSize:15,
-    fontFamily:'Inter'
+    fontFamily:'Inter',
+    fontWeight:'bold'
   },
+
 })

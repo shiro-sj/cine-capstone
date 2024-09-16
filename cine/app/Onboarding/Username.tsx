@@ -1,6 +1,8 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Username = () => {
   const [username, setUsername] = useState<string>('');
@@ -8,30 +10,113 @@ const Username = () => {
     setUsername('')
     console.log(username)
   }
+  function navigate(){
+    router.push('/Onboarding/Email')
+  }
   return (
-    <View>
-      <Text>Username</Text>
-      <Text>What is your username?</Text>
-      <View>
-        <TextInput style={styles.input} value={username} onChangeText={setUsername} placeholder="Enter your username">
-        </TextInput>
-         <Link href="/onboarding/CreatePassword"><Pressable onPress={handlePress}><Text>Submit</Text></Pressable></Link>
+    <KeyboardAvoidingView style={styles.container} behavior='padding'>
+       <LinearGradient
+      colors={["#060606", "#1D1E18" ]}
+      style={styles.backgroundGradient}>
+      <SafeAreaView style={styles.innerContainer}>
+        <View>
+        <Text style={styles.title}>Create a username</Text>
+        <Text style={styles.subtitle}>This is how other users see you.</Text>
+        <View>
+          <TextInput style={styles.input} value={username} onChangeText={setUsername} placeholder="Enter your username"></TextInput>
+        </View>
+        </View>
+     
+      <View style={styles.navigation}>
+        <View style={styles.backButton}>
+          <Link href="../"><Text style={styles.buttonText}>Back</Text></Link>
+       </View>
+       <View style={styles.buttonContainer}>
+        <Pressable onPress={handlePress} onPressOut={navigate} style={styles.button}><Text style={styles.buttonText}>Continue</Text></Pressable>
+       </View>
       </View>
-      <Link href="/onboarding/Email"><Text>
-        Next
-      </Text>
-      </Link>
-    </View>
+    
+      </SafeAreaView>
+      </LinearGradient>
+    </KeyboardAvoidingView>
   );
 };
 
 export default Username;
 
 const styles = StyleSheet.create({
+  container:{
+    backgroundColor:'black',
+    flex:1,
+  },
+  innerContainer:{
+    flex:1,
+    margin:20,
+    justifyContent:'space-between',
+
+  },
+  backgroundGradient:{
+    flex: 1,
+  },
+  title:{
+    fontSize:40,
+    color:'white',
+    fontFamily:'Inter',
+    fontWeight:'bold',
+    padding:10,
+
+  },  
   input:{
     height:50,
-    borderColor:'black',
+    borderColor:'grey',
+    backgroundColor:'grey',
     borderWidth:1,
-    marginHorizontal:20
-  }
+    marginHorizontal:10,
+    borderRadius: 20,
+    padding:10,
+    marginTop:50,
+    color:'white',
+    fontSize:20,
+    fontWeight:'bold',
+    fontFamily:'Inter'
+
+  },
+  subtitle:{
+    color:'white',
+    padding:10,
+    fontSize:20,
+    fontWeight:'bold',
+  },
+  button:{
+    padding:20,
+    backgroundColor:'#1B065E',
+    justifyContent:'center',
+    margin:20,
+    borderRadius:20,
+  },
+  buttonText:{
+    color:'white',
+    textAlign:'center',
+    fontWeight:'700',
+    fontFamily:'Inter',
+    fontSize:20,
+  },
+  buttonContainer:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  backButton:{
+    padding:20,
+    borderRadius:20,
+    backgroundColor: "#1B065E",
+  },
+  navigation:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    gap:120
+  },
+
+
 })
