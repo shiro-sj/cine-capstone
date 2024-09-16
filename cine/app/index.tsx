@@ -34,7 +34,7 @@ export default function Onboarding() {
         </View>
 
         <View style={styles.login}>
-            <Text style={styles.loginText}>Already have an account?<Link href="/Login/Login"><Text style={styles.loginTextButton}>  Login</Text></Link></Text>
+            <Text style={styles.loginText}>Already have an account?<Link href="/Login/login_page"><Text style={styles.loginTextButton}>  Login</Text></Link></Text>
           </View>
 
           <TouchableOpacity style={styles.buttonContainer}>

@@ -19,7 +19,7 @@ const Username = () => {
       colors={["#060606", "#1D1E18" ]}
       style={styles.backgroundGradient}>
       <SafeAreaView style={styles.innerContainer}>
-        <View>
+        <View style={styles.info}>
         <Text style={styles.title}>Create a username</Text>
         <Text style={styles.subtitle}>This is how other users see you.</Text>
         <View>
@@ -29,7 +29,7 @@ const Username = () => {
      
       <View style={styles.navigation}>
         <View style={styles.backButton}>
-          <Link href="../"><Text style={styles.buttonText}>Back</Text></Link>
+          <Link href="../"><Text style={styles.backButtonText}>Back</Text></Link>
        </View>
        <View style={styles.buttonContainer}>
         <Pressable onPress={handlePress} onPressOut={navigate} style={styles.button}><Text style={styles.buttonText}>Continue</Text></Pressable>
@@ -51,8 +51,12 @@ const styles = StyleSheet.create({
   },
   innerContainer:{
     flex:1,
-    margin:20,
+    margin:30,
     justifyContent:'space-between',
+
+  },
+  info:{
+    marginTop:50
 
   },
   backgroundGradient:{
@@ -109,14 +113,22 @@ const styles = StyleSheet.create({
   backButton:{
     padding:20,
     borderRadius:20,
-    backgroundColor: "#1B065E",
   },
   navigation:{
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
-    gap:120
+    gap:100
   },
+  backButtonText:{
+    color:'white',
+    textAlign:'center',
+    fontWeight:'700',
+    fontFamily:'Inter',
+    fontSize:20,
+    opacity:0.5,
+
+  }
 
 
 })
