@@ -3,6 +3,7 @@
     "name": "cine",
     "slug": "cine",
     "version": "1.0.0",
+    "scheme": "cine",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -29,6 +30,9 @@
       "eas": {
         "projectId": "51f97af3-1668-42d3-8504-75feef07fa53"
       }
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
