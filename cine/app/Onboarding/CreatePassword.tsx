@@ -32,7 +32,7 @@ const Password = () => {
           <Link href="../"><Text style={styles.buttonText}>Back</Text></Link>
        </View>
        <View style={styles.buttonContainer}>
-        <Pressable onPress={handlePress} onPressOut={navigate} style={styles.button}><Text style={styles.buttonText}>Finish</Text></Pressable>
+        <Pressable onPress={handlePress} onPressOut={navigate} style={styles.button}><Text style={styles.buttonText}>Create Account</Text></Pressable>
        </View>
       </View>
     
@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
-    gap:120
+    gap: 70
+
   },
 
 

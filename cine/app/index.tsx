@@ -2,15 +2,13 @@ import { Button, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-na
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import logo from '../assets/logo.png';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 export default function Onboarding() {
 
-
-  // const width = useSharedValue(100);
-
-  // const handlePress = () => {
-  //   width.value = withSpring(width.value + 50);
+function navigate(){
+  router.push('/Onboarding')
+}
 
   return (
     <View style={styles.container}>
@@ -25,7 +23,10 @@ export default function Onboarding() {
         <View style={styles.background}>
 
         <View style={styles.logoContainer}>
+          <Link href="/app/(tabs)">
           <Image style={styles.logo} source={logo}/>
+          </Link>
+          
         </View>
 
         <View style={styles.info}>
@@ -38,9 +39,7 @@ export default function Onboarding() {
           </View>
 
           <TouchableOpacity style={styles.buttonContainer}>
-            <Link href="/Onboarding" style={styles.buttonText}>
-            <Text>Get Started</Text>
-            </Link>
+            <Text style={styles.buttonText}>Get Started</Text>
           </TouchableOpacity>
 
         </View>
