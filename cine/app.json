@@ -2,8 +2,8 @@
   "expo": {
     "name": "cine",
     "slug": "cine",
-    "scheme": "cine",
     "version": "1.0.0",
+    "scheme": "cine",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,18 +13,23 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.shirosjm.cine"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "dev.camillasjm.cine"
+      "package": "com.shirosjm.cine"
     },
     "web": {
-      "favicon": "./assets/favicon.png",
-      "bundler": "metro"
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "51f97af3-1668-42d3-8504-75feef07fa53"
+      }
     },
     "plugins": [
       "expo-router"
