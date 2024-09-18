@@ -1,39 +1,97 @@
-import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Button, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { Link, router } from 'expo-router';
+import { Link, router, useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useSignUp } from '@clerk/clerk-expo';
 
 const password = () => {
-  const [password, setPassword] = useState<string>('');
-  function handlePress(){
-    setPassword('')
-    console.log(password)
+    const [password, setPassword] = useState<string>('');
+    const { emailAddress, username } = useLocalSearchParams();
+    const {isLoaded, signUp, setActive} = useSignUp();
+    const [pendingVerification, setPendingVerification] = useState(false);
+    const [code, setCode] = useState('');
+    const router = useRouter();
+
+    async function handleSignup(){
+        if(!isLoaded){
+            return
+        }
+        try{
+            await signUp.create({
+                username: username as string,
+                emailAddress: emailAddress as string,
+                password,
+            })
+
+            await signUp.prepareEmailAddressVerification({strategy: 'email_code'})
+
+            setPendingVerification(true)
+        } catch (err:any){
+            console.error(JSON.stringify(err, null, 2))
+        }
+    };
+
+  const onPressVerify = async () => {
+    if (!isLoaded) {
+      return
+    }
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      })
+
+      if (completeSignUp.status === 'complete') {
+        await setActive({ session: completeSignUp.createdSessionId })
+        router.replace('/')
+      } else {
+        console.error(JSON.stringify(completeSignUp, null, 2))
+      }
+    } catch (err: any) {
+      // See https://clerk.com/docs/custom-flows/error-handling
+      // for more info on error handling
+      console.error(JSON.stringify(err, null, 2))
+    }
   }
-  function navigate(){
-    router.push('/onboarding/welcome_page')
-  }
+
   return (
+    
     <View style={styles.container}>
-       <LinearGradient
-      colors={["#060606", "#1D1E18" ]}
-      style={styles.backgroundGradient}>
-        <View style={styles.info}>
-            <Text style={styles.title}>Create a password</Text>
-            <Text style={styles.subtitle}>Must be at least 8 characters</Text>
-            <TextInput onChangeText={setPassword} style={styles.input} value={password} placeholder='Enter your password'></TextInput>
-        </View>
-        <KeyboardAvoidingView style={styles.navigation} behavior='padding'>
-            <TouchableOpacity onPress={()=>{router.push('../')}}>
-                <Text style={styles.back}>Back</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handlePress} onPressOut={navigate}>
-                <Text style={styles.buttonText}>Create Account</Text>
-            </TouchableOpacity>
-            
-        </KeyboardAvoidingView>
-        </LinearGradient>
-      
+        {!pendingVerification && (
+            <View style={styles.container}>
+            <LinearGradient
+           colors={["#060606", "#1D1E18" ]}
+           style={styles.backgroundGradient}>
+             <View style={styles.info}>
+                 <Text style={styles.title}>{emailAddress}{username}</Text>
+                 <Text style={styles.title}>Create a password</Text>
+                 <Text style={styles.subtitle}>Must be at least 8 characters</Text>
+                 <TextInput secureTextEntry={true} onChangeText={setPassword} style={styles.input} value={password} placeholder='Enter your password'></TextInput>
+             </View>
+             <KeyboardAvoidingView style={styles.navigation} behavior='padding'>
+                 <TouchableOpacity onPress={()=>{router.push('../')}}>
+                     <Text style={styles.back}>Back</Text>
+                 </TouchableOpacity>
+                 <TouchableOpacity style={styles.button} onPress={handleSignup}>
+                     <Text style={styles.buttonText}>Create Account</Text>
+                 </TouchableOpacity>
+                 
+             </KeyboardAvoidingView>
+             </LinearGradient>
+           
+         </View>
+
+        )}
+    {pendingVerification && (
+        <>
+          <TextInput value={code} placeholder="Code..." onChangeText={(code) => setCode(code)} style={styles.input}/>
+          <Button title="Verify Email" onPress={onPressVerify} />
+        </>
+      )}
+
     </View>
+    
+    
   );
 };
 
@@ -109,3 +167,4 @@ const styles = StyleSheet.create({
 
 
 })
+

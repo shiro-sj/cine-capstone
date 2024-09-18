@@ -1,16 +1,18 @@
 import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { Link, router } from 'expo-router';
+import { Link, router, useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import username from './username';
 
 const email = () => {
   const [emailAddress, setEmailAddress] = useState<string>('');
+  const {username} = useLocalSearchParams<string>();
+  const router = useRouter();
   function handlePress(){
-    setEmailAddress('')
     console.log(emailAddress)
   }
   function navigate(){
-    router.push('/onboarding/password')
+    router.push({pathname:'/onboarding/password', params:{emailAddress, username}});
   }
   return (
     <View style={styles.container}>

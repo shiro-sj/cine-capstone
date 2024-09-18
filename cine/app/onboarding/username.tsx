@@ -6,11 +6,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 const username = () => {
   const [username, setUsername] = useState<string>('');
   function handlePress(){
-    setUsername('')
     console.log(username)
   }
   function navigate(){
-    router.push('/onboarding/email')
+    router.push({pathname:'/onboarding/email', params:{username}})
   }
   return (
     <View style={styles.container}>

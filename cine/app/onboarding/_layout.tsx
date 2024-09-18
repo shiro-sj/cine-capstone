@@ -1,9 +1,16 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
+import { useAuth } from '@clerk/clerk-expo';
 
 
 const OnboardingLayout = () => {
+  const { isSignedIn } = useAuth()
+
+  if (isSignedIn) {
+    return <Redirect href={'/tabs'} />
+  }
+
   return (
     <Stack>
         <Stack.Screen name="username" options={{headerShown: false}}/>
