@@ -2,64 +2,50 @@ import { Button, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-na
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import logo from '../assets/logo.png';
-import { Link } from 'expo-router';
-import { Redirect } from 'expo-router';
+import { Link, router } from 'expo-router';
 
-export default function Onboarding() {
+export default function get_started() {
+    function navigate(){
+        router.push('/onboarding')
 
-
-  // const width = useSharedValue(100);
-
-  // const handlePress = () => {
-  //   width.value = withSpring(width.value + 50);
-
+    };
   return (
-    <Redirect href = {'/gandalf/gandalf'}/>
-  //   <View style={styles.container}>
-  //     <LinearGradient
-  //     colors={["#060606", "#1D1E18" ]}
-  //     style={styles.backgroundGradient}>
-  //       <LinearGradient
-  //         colors={["#1B065E", "#FF4E00" ]}
-  //         locations={[0.4,0.9]}
-  //         style={styles.topArea}/>
+    <View style={styles.container}>
+      <LinearGradient
+      colors={["#060606", "#1D1E18" ]}
+      style={styles.backgroundGradient}>
+        <LinearGradient
+          colors={["#1B065E", "#FF4E00" ]}
+          locations={[0.4,0.9]}
+          style={styles.topArea}/>
 
-  //       <View style={styles.background}>
+        <View style={styles.background}>
 
-  //       <View style={styles.logoContainer}>
-  //         <Image style={styles.logo} source={logo}/>
-  //       </View>
+        <View style={styles.logoContainer}>
+          <TouchableOpacity onPress={()=> {router.push('/tabs')}}>
+            <Image style={styles.logo} source={logo}/>
 
-  //       <View style={styles.info}>
-  //         <Text style={styles.title}>cine</Text>
-  //         <Text style={styles.subtitle}>View watch histories and more.</Text>
-  //       </View>
+          </TouchableOpacity>
+          
+        </View>
 
-  //       <View style={styles.login}>
-  //           <Text style={styles.loginText}>Already have an account?<Link href="/Login/Login"><Text style={styles.loginTextButton}>  Login</Text></Link></Text>
-  //         </View>
+        <View style={styles.info}>
+          <Text style={styles.title}>cine</Text>
+          <Text style={styles.subtitle}>View watch histories and more.</Text>
+        </View>
 
-  //         <TouchableOpacity style={styles.buttonContainer}>
-  //           <Link href="/Onboarding" style={styles.buttonText}>
-  //           <Text>Get Started</Text>
-  //           </Link>
-  //         </TouchableOpacity>
+        <View style={styles.login}>
+            <Text style={styles.loginText}>Already have an account?<Link href="/login/Login"><Text>Login</Text></Link></Text>
+          </View>
 
-  //       </View>
-  //     </LinearGradient>
-  //   </View>
+          <TouchableOpacity style={styles.buttonContainer} onPress={navigate}>
+            <Text style={styles.buttonText}>Get Started</Text>
+          </TouchableOpacity>
 
+        </View>
+      </LinearGradient>
+    </View>
 
-  // //   <View style={{ flex: 1, alignItems: 'center' }}>
-  // //   <Animated.View
-  // //     style={{
-  // //       width,
-  // //       height: 100,
-  // //       backgroundColor: 'violet',
-  // //     }}
-  // //   />
-  // //   <Button onPress={handlePress} title="Click me" />
-  // // </View>
    
   )
 }
@@ -112,9 +98,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B065E",
     borderRadius:100,
     marginHorizontal:50,
+    padding:15,
   },
   buttonText:{
-    padding:15,
+    padding:5,
     color:"white",
     fontSize:20
   },
@@ -130,10 +117,8 @@ const styles = StyleSheet.create({
   },
 
   loginTextButton:{
-    color:'white',
+    color:'#1B065E',
     fontSize:15,
-    fontFamily:'Inter',
-    fontWeight:'bold'
+    fontFamily:'Inter'
   },
-
 })
