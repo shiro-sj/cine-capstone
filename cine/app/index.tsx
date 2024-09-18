@@ -3,6 +3,7 @@ import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import logo from '../assets/logo.png';
 import { Link, router } from 'expo-router';
+import { SignedOut } from '@clerk/clerk-expo';
 
 export default function get_started() {
     function navigate(){
@@ -11,39 +12,41 @@ export default function get_started() {
     };
   return (
     <View style={styles.container}>
-      <LinearGradient
-      colors={["#060606", "#1D1E18" ]}
-      style={styles.backgroundGradient}>
+      <SignedOut>
         <LinearGradient
-          colors={["#1B065E", "#FF4E00" ]}
-          locations={[0.4,0.9]}
-          style={styles.topArea}/>
+        colors={["#060606", "#1D1E18" ]}
+        style={styles.backgroundGradient}>
+          <LinearGradient
+            colors={["#1B065E", "#FF4E00" ]}
+            locations={[0.4,0.9]}
+            style={styles.topArea}/>
 
-        <View style={styles.background}>
+          <View style={styles.background}>
 
-        <View style={styles.logoContainer}>
-          <TouchableOpacity onPress={()=> {router.push('/tabs')}}>
-            <Image style={styles.logo} source={logo}/>
+          <View style={styles.logoContainer}>
+            <TouchableOpacity onPress={()=> {router.push('/tabs')}}>
+              <Image style={styles.logo} source={logo}/>
 
-          </TouchableOpacity>
-          
-        </View>
-
-        <View style={styles.info}>
-          <Text style={styles.title}>cine</Text>
-          <Text style={styles.subtitle}>View watch histories and more.</Text>
-        </View>
-
-        <View style={styles.login}>
-            <Text style={styles.loginText}>Already have an account?<Link href="/login/Login"><Text>Login</Text></Link></Text>
+            </TouchableOpacity>
+            
           </View>
 
-          <TouchableOpacity style={styles.buttonContainer} onPress={navigate}>
-            <Text style={styles.buttonText}>Get Started</Text>
-          </TouchableOpacity>
+          <View style={styles.info}>
+            <Text style={styles.title}>cine</Text>
+            <Text style={styles.subtitle}>View watch histories and more.</Text>
+          </View>
 
-        </View>
-      </LinearGradient>
+          <View style={styles.login}>
+              <Text style={styles.loginText}>Already have an account?<Link href="/login"><Text>Login</Text></Link></Text>
+            </View>
+
+            <TouchableOpacity style={styles.buttonContainer} onPress={navigate}>
+              <Text style={styles.buttonText}>Get Started</Text>
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
+
+      </SignedOut>
     </View>
 
    
