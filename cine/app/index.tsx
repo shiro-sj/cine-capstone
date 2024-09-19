@@ -3,15 +3,21 @@ import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import logo from '../assets/logo.png';
 import { Link, router } from 'expo-router';
-import { SignedOut } from '@clerk/clerk-expo';
+import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo';
 
 export default function get_started() {
+    const { user } = useUser()
+    
     function navigate(){
         router.push('/onboarding')
 
     };
   return (
     <View style={styles.container}>
+      <SignedIn>
+      <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+
+      </SignedIn>
       <SignedOut>
         <LinearGradient
         colors={["#060606", "#1D1E18" ]}
@@ -75,6 +81,7 @@ const styles = StyleSheet.create({
   topArea:{
     height:350,
     borderBottomEndRadius:200,
+    overflow:'hidden',
   },
   info:{
     justifyContent:'center', 
