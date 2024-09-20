@@ -27,8 +27,14 @@ const Home = () => {
           {/* <HomeHeader TitleName={'test title'} />
           <HomeWidget widgetName={'test'} /> */}
 
-          <Link href='/movieDetails/high_school_musical'>
-            <Text>Movie Details page</Text>
+          <Link href='/movie_details/The+Fast+and+the+Furious%3A+Tokyo+Drift'>
+            <Text>Tokyo Drift</Text>
+          </Link>
+          <Link href='/movie_details/Spirited+Away'>
+            <Text>Spirited Away</Text>
+          </Link>
+          <Link href='/gandalf/gandalf'>
+            <Text>Connect to Netflix</Text>
           </Link>
 
           {/* <Button onPress={()=> FIREBASE_AUTH.signOut()} title='Logout'/> */}

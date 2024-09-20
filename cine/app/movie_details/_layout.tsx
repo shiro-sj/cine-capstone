@@ -1,16 +1,7 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Redirect, Stack } from 'expo-router';
-import { useAuth } from '@clerk/clerk-expo';
+import { Stack } from 'expo-router';
 
 
-const MovieDetailsLayout = () => {
-  const { isSignedIn } = useAuth()
-
-  if (isSignedIn) {
-    return <Redirect href={'/tabs'} />
-  }
-
+const movieLayout = () => {
   return (
     <Stack>
         <Stack.Screen name="[name]" options={{headerShown: false}}/>
@@ -19,4 +10,5 @@ const MovieDetailsLayout = () => {
   )
 };
 
-export default MovieDetailsLayout;
+export default movieLayout;
+

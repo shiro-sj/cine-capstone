@@ -11,7 +11,7 @@ const gandalf = () => {
         //Initialize Connect
         const connect = new Connect({
             publicKey: "0x02015e78df7470d4236cfa05f684c56796886a172e7612db33e2e06258f895ed3d",
-            redirectURL: "http://google.com",
+            redirectURL: "http://localhost:8081",
             // The platform defaults to IOS but could be ANDROID or UNIVERSAL
             platform: Platform.UNIVERSAL,
             services:
