@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
     innerContainer:{
         flex:1,
         margin:20,
-        justifyContent:'space-evenly'
-
+        justifyContent:'center',
+        gap:30
     },
         
     input:{

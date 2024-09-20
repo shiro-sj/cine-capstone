@@ -96,17 +96,23 @@ const Password = () => {
 
       {pendingVerification && (
         <>
-        <View style={styles.container}>
-        <LinearGradient colors={['#060606', '#1D1E18']} style={styles.backgroundGradient}>
+        <View style={styles.codeContainer}>
+        <LinearGradient colors={['#060606', '#1D1E18']} style={styles.codeContainerBackground}>
+          <View style={styles.innerCodeContainer}>
+          <Text style={styles.title}>Enter Verification Code</Text>
+          <Text style={styles.subtitle}>Check your email for the code.</Text>
         <TextInput
             value={code}
             placeholder="Code..."
             onChangeText={(code) => setCode(code)}
             style={styles.input}
           />
-          <Button title="Verify Email" onPress={onPressVerify} />
+          <TouchableOpacity onPress={onPressVerify} style ={styles.button}><Text style={styles.buttonText}>Verify Email</Text></TouchableOpacity>
 
           {error ? <Text style={styles.checkingText}>{error}</Text> : null}
+
+          </View>
+          
 
         </LinearGradient>
         </View>
@@ -197,4 +203,17 @@ const styles = StyleSheet.create({
     opacity:0.6,
     paddingTop:10,
   },
+  codeContainer:{
+    flex:1,
+  },
+  codeContainerBackground:{
+    flex:1,
+
+  },
+  innerCodeContainer:{
+    marginHorizontal:30,
+    marginTop:50,
+    justifyContent:'flex-start',
+    gap:20,
+  }
 });
