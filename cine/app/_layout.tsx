@@ -47,6 +47,7 @@ const RootLayout = () => {
           <Stack.Screen name="login" options={{headerShown: false, presentation:'modal'}}/>
           <Stack.Screen name="tabs" options={{headerShown: false}}/>
           <Stack.Screen name="movie_details" options={{headerShown: false}}/>
+          <Stack.Screen name="(home)"/>
         </Stack>
       </ClerkLoaded>
     </ClerkProvider>

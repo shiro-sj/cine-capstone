@@ -8,8 +8,8 @@ CREATE TABLE users (
 );
 
 
-INSERT INTO users (name, email, password)
+INSERT INTO users (user_name, email, password)
 VALUES ('harman', 'harman@hotmail.com', '123');
 
-INSERT INTO users (name, email, password)
+INSERT INTO users (user_name, email, password)
 VALUES ('Jeff', 'Jeff@hotmail.com', '123');
