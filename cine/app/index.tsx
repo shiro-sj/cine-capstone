@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-na
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import logo from '../assets/logo.png';
-import { Link, router } from 'expo-router';
+import { Link, Redirect, router } from 'expo-router';
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo';
 
 export default function get_started() {
@@ -15,7 +15,7 @@ export default function get_started() {
   return (
     <View style={styles.container}>
       <SignedIn>
-      <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+       <Redirect href="/(home)"/>
 
       </SignedIn>
       <SignedOut>
