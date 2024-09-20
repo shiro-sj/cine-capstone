@@ -40,7 +40,7 @@ export default function get_started() {
           <View style={styles.info}>
             <Text style={styles.title}>cine</Text>
             <Text style={styles.subtitle}>View watch histories and more.</Text>
-          </View>
+          </View> 
 
           <View style={styles.login}>
               <Text style={styles.loginText}>Already have an account?<Link href="/login"><Text>Login</Text></Link></Text>
