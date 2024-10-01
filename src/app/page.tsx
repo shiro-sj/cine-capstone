@@ -9,17 +9,17 @@ export default function Home() {
 
   return (
     <div>
-      {isSignedIn && <Page />}
-      <div>
-        {!isSignedIn ? (
-          <div>
-            <Link href="/sign-up">Signup</Link>
-            <Link href="/sign-in">Login</Link>
-          </div>
-        ) : (
-          <UserButton />
-        )}
-      </div>
+    {isSignedIn && <Page/>}
+    <div>
+      {!isSignedIn ? (
+        <div>
+          <Link href="/sign-up">Signup</Link>
+          <Link href="/sign-in">Login</Link>
+        </div>
+      ) : (
+        <UserButton/>
+      )}
+    </div>
     </div>
   );
 }
