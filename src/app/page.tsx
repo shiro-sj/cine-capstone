@@ -8,7 +8,6 @@ export default function Home() {
   const { isSignedIn } = useUser();
 
   return (
-    <div>
     {isSignedIn && <Page/>}
     <div>
       {!isSignedIn ? (
@@ -20,6 +19,5 @@ export default function Home() {
         <UserButton/>
       )}
     </div>
-  </div>
   );
 }
