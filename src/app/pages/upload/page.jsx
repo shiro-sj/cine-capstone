@@ -1,6 +1,5 @@
 'use client';
-import { useCsv } from '../context/CsvContext';
-import QuickMovie from '../components/quickMovie';
+import { useCsv } from '../../context/CsvContext';
 import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 
 export default function CSVUpload() {
