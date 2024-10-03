@@ -5,7 +5,6 @@ import { useCsv } from '../../context/CsvContext';
 export default function WatchTime() {
   const [watchTime, setWatchTime] = useState(null);  // State for watch time
   const [loading, setLoading] = useState(false);  // Loading state
-  const [error, setError] = useState(null);  // Error state to handle fetch issues
   const { csvData } = useCsv();
 
   const fetchMovieTime = async (title) => {
@@ -17,7 +16,7 @@ export default function WatchTime() {
       }
       return movieData.Runtime;  // Return runtime
     } catch (error) {
-      console.error(`Error fetching runtime for ${title}:`, error);
+      console.log(error)
       return null;  // Return null if there's an error
     }
   };
