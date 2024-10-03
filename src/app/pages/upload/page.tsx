@@ -32,7 +32,7 @@ export default function CSVUpload() {
 
     // Map each row of data to an object with keys corresponding to headers
     const mappedRows = rows.slice(1).map((row) => {
-      let rowData: { [key: string]: string } = {};
+      const rowData: { [key: string]: string } = {};
 
       row.forEach((cell, index) => {
         const header = headers[index]?.trim();  // Ensure header exists and is trimmed
