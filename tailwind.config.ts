@@ -12,6 +12,9 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        departure: ['DepartureMono', 'Arial', 'Helvetica', 'sans-serif'],
+      },
     },
   },
   plugins: [],

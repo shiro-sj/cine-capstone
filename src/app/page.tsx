@@ -1,8 +1,8 @@
 "use client";
 
 import { UserButton, useUser } from "@clerk/nextjs";
-import Link from "next/link";
 import Page from "./pages/page";
+import Onboarding from "./Onboarding/page";
 
 export default function Home() {
   const { isSignedIn } = useUser();
@@ -12,10 +12,7 @@ export default function Home() {
     {isSignedIn && <Page/>}
     <div>
       {!isSignedIn ? (
-        <div>
-          <Link href="/sign-up">Signup</Link>
-          <Link href="/sign-in">Login</Link>
-        </div>
+        <Onboarding/>
       ) : (
         <UserButton/>
       )}
