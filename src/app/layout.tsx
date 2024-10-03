@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import {CsvProvider} from './context/CsvContext'
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,10 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <CsvProvider>
     <html lang="en">
       <body>
         {children}
       </body>
     </html>
+    </CsvProvider>
   );
 }
