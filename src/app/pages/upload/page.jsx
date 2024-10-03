@@ -1,9 +1,11 @@
 'use client';
-import { useCsv }  from '../../context/CsvContext';
-import { useRouter } from 'next/navigation'; // Import useRouter for navigation
+
+import { useCsv } from '../../context/CsvContext';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
 export default function CSVUpload() {
-  const setCsvData = useCsv();  // Access csvData and setCsvData from context
+  const { setCsvData } = useCsv();  // Access csvData and setCsvData from context
   const router = useRouter();  // Initialize router
 
   const handleFileUpload = (event) => {
@@ -21,29 +23,23 @@ export default function CSVUpload() {
   };
 
   const parseCSV = (content) => {
-    const rows = content.split('\n').map(row => row.split(','));  // Split CSV into rows and columns
-  
-    if (rows.length === 0) return;  // Exit if there are no rows
-  
-    const headers = rows[0];  // The first row is the headers
-  
-    // Map each row of data to an object with keys corresponding to headers
+    const rows = content.split('\n').map(row => row.split(','));
+    if (rows.length === 0) return;
+
+    const headers = rows[0];
     const mappedRows = rows.slice(1).map(row => {
       let rowData = {};
-  
       row.forEach((cell, index) => {
-        const header = headers[index] && headers[index].trim();  // Ensure header exists and is trimmed
+        const header = headers[index]?.trim();
         if (header) {
-          rowData[header] = cell ? cell.replace(/"/g, '').trim() : '';  // Clean up cell data or default to empty string
+          rowData[header] = cell ? cell.replace(/"/g, '').trim() : '';
         }
       });
-  
       return rowData;
     });
-  
+
     setCsvData(mappedRows.slice(0, 20));  // Save the first 20 rows to state
   };
-  
 
   return (
     <div className="csv-upload">

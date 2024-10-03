@@ -6,7 +6,7 @@ import { useCsv } from '../../context/CsvContext';
 export default function MovieDetails({ params }) {
     
     const [details, setDetails] = useState(null);
-    const { csvData } = useCsv();
+    useCsv();
 
     useEffect(() => {
         const fetchMovieData = async () => {
@@ -16,7 +16,7 @@ export default function MovieDetails({ params }) {
         };
     
         fetchMovieData();
-      }, []);
+      }, [params.id]);
 
       if (details == null){
         return<h1>Loading...</h1>
