@@ -1,6 +1,6 @@
 "use client";
 
-import { UserButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import Home from './pages/page'
 import Onboarding from "./Onboarding/page";
 
