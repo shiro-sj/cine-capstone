@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 
 const CsvContext = createContext();
 
-export function useCsv() {
+export default function useCsv() {
   return useContext(CsvContext);
 }
 

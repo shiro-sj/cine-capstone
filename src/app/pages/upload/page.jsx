@@ -1,9 +1,9 @@
 'use client';
-import useCsv  from '../../context/CsvContext';
+import { useCsv }  from '../../context/CsvContext';
 import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 
 export default function CSVUpload() {
-  const { csvData, setCsvData } = useCsv();  // Access csvData and setCsvData from context
+  const setCsvData = useCsv();  // Access csvData and setCsvData from context
   const router = useRouter();  // Initialize router
 
   const handleFileUpload = (event) => {
