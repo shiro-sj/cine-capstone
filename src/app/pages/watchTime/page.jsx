@@ -55,11 +55,6 @@ export default function WatchTime() {
     return <div>Loading...</div>;
   }
 
-  // Handle errors gracefully
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
     <div>
       {watchTime !== null ? (
@@ -69,4 +64,4 @@ export default function WatchTime() {
       )}
     </div>
   );
-}
+};
