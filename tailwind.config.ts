@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'dark-purple': "#330C2F",
       },
       fontFamily: {
         departure: ['DepartureMono', 'Arial', 'Helvetica', 'sans-serif'],
