@@ -1,7 +1,7 @@
-import React from 'react';
-import NavBar from '../components/NavBar';
+import NavBar from '@/app/components/NavBar';
+import React from 'react'
 
-function Home() {
+function page() {
   return (
     <div className="bg-gradient-to-br from-dark-purple to-slate-800 min-h-screen flex flex-col items-center justify-center gap-40">
       
@@ -10,17 +10,13 @@ function Home() {
       </header>
 
       <div className="flex flex-col items-center justify-center h-96">
-        <h1>Home</h1>
+        <h1>Profile</h1>
       </div>
       <div className="flex flex-col items-center justify-center h-96">
-        <h1>Home</h1>
+        <h1>Profile</h1>
       </div>
-      <div className="flex flex-col items-center justify-center h-96">
-        <h1>Home</h1>
-      </div>
-
     </div>
-  );
+  )
 }
 
-export default Home;
+export default page;

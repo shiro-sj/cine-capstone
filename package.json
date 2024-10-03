@@ -12,6 +12,7 @@
     "@clerk/nextjs": "^5.6.4",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@heroicons/react": "^1.0.6",
     "@mui/material": "^6.1.2",
     "@prisma/client": "^5.20.0",
     "@vercel/blob": "^0.24.1",

@@ -86,6 +86,10 @@ h3 {
 h3:hover {
   transform: scale(1.25);
 }
+
+Link:hover{
+  transform: scale(1.25);
+}
 nav{
   border-radius:1rem;
   background: linear-gradient(to right, var(--primary-color), var(--foreground));
