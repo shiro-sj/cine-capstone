@@ -1,22 +1,24 @@
 import Link from 'next/link';
-import React from 'react'
-
+import { HomeIcon, UserIcon, ChartBarIcon } from '@heroicons/react/outline';
+import { UserButton } from '@clerk/nextjs';
 function NavBar() {
   return (
-    <nav className="flex justify-between items-center h-16 p-10 bg-transparent border-none rounded-xl">
-    <div className="flex gap-8 items-center">
-        <Link href='/Tutorial'>
-            <h3 className="text-lg text-stone-400 hover:text-violet-300 transition duration-300 cursor-pointer">Tutorial</h3>
+    <nav className="flex justify-between items-center w-full h-16 bg-transparent border-none rounded-xl p-8">
+      <div className="flex items-center w-full justify-between p-10">
+        <Link href='/pages'>
+            <HomeIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
         </Link>
-        <Link href='/sign-in'>
-            <h3 className="text-lg text-stone-400 hover:text-violet-300 transition duration-300 cursor-pointer">Login</h3>
+        <Link href='/pages/profile'>
+            <UserIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
         </Link>
-        <Link href='/sign-up'>
-            <h3 className='p-3 text-lg rounded-lg bg-violet-800 hover:bg-violet-700 transition duration-300 cursor-pointer'>Create A Profile</h3>
+        <Link href='/pages/stats'>
+            <ChartBarIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
         </Link>
-    </div>
-</nav>
-  )
+        <UserButton></UserButton>
+
+      </div>
+    </nav>
+  );
 }
 
 export default NavBar;
