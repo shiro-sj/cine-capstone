@@ -1,6 +1,5 @@
 'use client'
-import { useCsv } from '../context/CsvContext';
-import QuickMovie from '../components/quickMovie';
+import useCsv  from '../../context/CsvContext';
 import { useState, useEffect } from 'react';
 
 export default function Genre() {
