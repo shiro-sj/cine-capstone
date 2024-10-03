@@ -11,11 +11,7 @@ export default function Home() {
     <div>
     {isSignedIn && <Page/>}
     <div>
-      {!isSignedIn ? (
-        <Onboarding/>
-      ) : (
-        <UserButton/>
-      )}
+    {!isSignedIn && <Onboarding/>}
     </div>
     </div>
   );
