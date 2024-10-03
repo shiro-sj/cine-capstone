@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import {CsvProvider} from './context/CsvContext'
+import CsvProvider from './context/CsvContext'
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
