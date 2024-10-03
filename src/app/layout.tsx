@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import {CsvProvider} from './context/CsvContext'
 import { ClerkProvider } from "@clerk/nextjs";
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,11 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
+      <CsvProvider>
       <html lang="en">
           <body>
             {children}
           </body>
       </html>
+        </CscProvider>
     </ClerkProvider>
     
   );
