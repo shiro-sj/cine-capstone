@@ -59,7 +59,7 @@ function Onboarding() {
                 </div>
 
                 <div className="text-center flex flex-col items-center">
-                    <h2 className='text-4xl mb-5'>Don't miss out</h2>
+                    <h2 className='text-4xl mb-5'>Don&apos;'t miss out</h2>
                     <h2 className='text-5xl font-departure'>Create a profile now</h2>
                     <button className='m-20' onClick={handleClick}>Get Started</button>
                 </div>
