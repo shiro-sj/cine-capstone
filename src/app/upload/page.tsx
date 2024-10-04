@@ -4,6 +4,11 @@ import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import Papa from 'papaparse';
 
+interface CSVRow {
+  Title: string;
+  Date: string;
+}
+
 export default function CSVUpload() {
   const [csvData, setCsvData] = useState<{ title: string; watchedAt: string }[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -27,7 +32,7 @@ export default function CSVUpload() {
       complete: (result) => {
         console.log("Parsed CSV Result:", result); // Debugging: Log the entire result
   
-        const mappedRows = result.data.map((row: any) => {
+        const mappedRows = (result.data as CSVRow[]).map((row) => {
           console.log("Row Data:", row); // Debugging: Log each row
   
           const title = row.Title ? row.Title.replace(/"/g, '').trim() : '';
