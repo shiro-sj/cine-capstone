@@ -1,8 +1,10 @@
 import React from 'react';
-import NavBar from '../components/NavBar';
+import NavBar from '../../components/NavBar';
 
 
-export default async function Home() {
+export default function Home() {
+
+
   return (
     <div className="bg-gradient-to-br from-dark-purple to-slate-800 min-h-screen flex flex-col items-center justify-center gap-40">
       

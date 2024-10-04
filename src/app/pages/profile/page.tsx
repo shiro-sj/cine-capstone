@@ -1,4 +1,4 @@
-import NavBar from '@/app/components/NavBar';
+import NavBar from '@/components/NavBar';
 import React from 'react'
 import CSVUpload from '../upload/page';
 import WatchTime from '../watchTime/page';

@@ -4,11 +4,8 @@ import Image from 'next/image';
 import logo from '../public/assets/logo.png'; 
 import netflixlogo from '../public/assets/netflix-logo.png';
 import letterboxdlogo from '../public/assets/letterboxd-logo.png';
-import 'aos/dist/aos.css';
-import AOS from'aos';
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import OnNavigator from '../components/OnNavigator';
+import OnNavigator from '../../components/OnNavigator';
 
 function Onboarding() {
     const router = useRouter();
@@ -16,14 +13,6 @@ function Onboarding() {
     const handleClick = () => {
         router.push('/sign-up'); 
     };
-
-    useEffect(() => {
-        AOS.init({
-            duration: 1000,
-            easing: 'ease-in-out',
-            once: true, 
-        });
-    }, []);
     
 
     return (

@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { useUser } from "@clerk/nextjs";
 import Home from './pages/page'
 import Onboarding from "./Onboarding/page";
