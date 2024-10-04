@@ -7,10 +7,11 @@ export default async function NavBar() {
   const user = await checkUser();
 
   return (
-    <nav className="fixed top-10 z-50 w-full mx-40">
+    <div className='justify-center flex'>
+    <nav className="fixed top-10 z-50">
           {/* SignedIn Section */}
           <SignedIn>
-            <div className="flex items-center justify-between mx-60 p-4">
+            <div className="flex items-center justify-between mx-40 p-4 gap-32">
               <Link href='/pages'>
                 <HomeIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
               </Link>
@@ -26,8 +27,8 @@ export default async function NavBar() {
 
           {/* SignedOut Section */}
           <SignedOut>
-            <div className="flex items-center justify-between p-4 mx-40">
-              <div className="text-stone-300 text-3xl font-bold font-departure justify-start">
+            <div className="flex-row flex items-center justify-between p-4 mx-20 gap-52">
+              <div className="flex text-stone-300 text-3xl font-bold font-departure justify-start">
                 cine
               </div>
               <div className="flex gap-8 items-center justify-end">
@@ -46,5 +47,6 @@ export default async function NavBar() {
             </div>
           </SignedOut>
     </nav>
+    </div>
   );
 }

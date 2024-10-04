@@ -1,23 +1,15 @@
-import React from 'react';
-import NavBar from '../../components/NavBar';
-
+"use client"
+import Link from 'next/link';
+import React, { useState } from 'react';
 
 export default function Home() {
 
-
   return (
-    <div className="bg-gradient-to-br from-dark-purple to-slate-800 min-h-screen flex flex-col items-center justify-center gap-40">
-
-      <div className="flex flex-col items-center justify-center h-96">
-        <h1>Home</h1>
+    <div className="bg-gradient-to-br from-dark-purple to-slate-800 min-h-screen flex items-center justify-center gap-40">
+        <div className='text-center justify-center'>
+          <h1>Upload to get started</h1>
+          <Link href='/pages/profile'><button>Go to Profile</button></Link>
+        </div>
       </div>
-      <div className="flex flex-col items-center justify-center h-96">
-        <h1>Home</h1>
-      </div>
-      <div className="flex flex-col items-center justify-center h-96">
-        <h1>Home</h1>
-      </div>
-
-    </div>
   );
 };
