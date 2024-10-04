@@ -51,9 +51,8 @@ export default function WatchHistoryGraph() {
       {
         label: 'Views per Day',
         data: counts, // Number of views per day
-        fill: false,
+        fill: true,
         backgroundColor: 'rgba(75,192,192,1)',
-        borderColor: 'rgba(75,192,192,0.2)',
         tension: 0.1,
       },
     ],
