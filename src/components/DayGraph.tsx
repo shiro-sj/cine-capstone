@@ -8,7 +8,7 @@ import { Chart as ChartJS, LineElement, PointElement, CategoryScale, LinearScale
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
 export default function WatchHistoryGraph() {
-  const [watchHistory, setWatchHistory] = useState<any[]>([]);
+  const [watchHistory, setWatchHistory] = useState<[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch the watch history data
