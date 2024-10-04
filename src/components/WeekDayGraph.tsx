@@ -1,14 +1,25 @@
-"use client";
+'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend, ChartOptions } from 'chart.js';
 
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
+// Define the type for each watch history item
+interface WatchHistoryItem {
+  watchedAt: string; // Assuming watchedAt is a date string
+}
+
+// Define the type for the processed chart data
+interface ProcessedData {
+  days: string[];    // Days of the week
+  counts: number[];  // Count of views for each day
+}
+
 export default function WatchHistoryDayGraph() {
-  const [watchHistory, setWatchHistory] = useState<[]>([]);
+  const [watchHistory, setWatchHistory] = useState<WatchHistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch the watch history data
@@ -28,7 +39,7 @@ export default function WatchHistoryDayGraph() {
   }, []);
 
   // Process the data to extract the day of the week and number of views on each day
-  const processData = () => {
+  const processData = (): ProcessedData => {
     const daysOfWeek: { [key: string]: number } = {
       Sunday: 0,
       Monday: 0,
@@ -40,7 +51,7 @@ export default function WatchHistoryDayGraph() {
     };
 
     // Count views for each day of the week
-    watchHistory.forEach((item: { watchedAt: string }) => {
+    watchHistory.forEach((item) => {
       const date = new Date(item.watchedAt);
       const dayOfWeek = date.toLocaleString('en-US', { weekday: 'long' });
       daysOfWeek[dayOfWeek]++;
@@ -69,8 +80,8 @@ export default function WatchHistoryDayGraph() {
     ],
   };
 
-  // Chart options
-  const options = {
+  // Chart options with proper typing
+  const options: ChartOptions<'bar'> = {
     responsive: true,
     plugins: {
       title: {
