@@ -5,6 +5,7 @@ import { checkUser } from '@/lib/checkUser';
 
 export default async function NavBar() {
   const user = await checkUser();
+  console.log(user);
 
   return (
     <div className='justify-center flex'>

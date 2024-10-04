@@ -3,7 +3,6 @@ import "./globals.css";
 import { CsvProvider } from '../context/CsvContext';
 import { ClerkProvider } from "@clerk/nextjs";
 import NavBar from "@/components/NavBar";
-import Onboarding from "./Onboarding/page";
 
 export const metadata: Metadata = {
   title: "Create Next App",
