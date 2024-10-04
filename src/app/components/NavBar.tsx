@@ -14,6 +14,9 @@ function NavBar() {
         <Link href='/pages/stats'>
             <ChartBarIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
         </Link>
+        <Link href='/pages/dashboard'>
+            <ChartBarIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
+        </Link>
         <UserButton></UserButton>
 
       </div>
