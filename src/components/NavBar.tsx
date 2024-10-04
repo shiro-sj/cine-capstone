@@ -16,10 +16,10 @@ export default async function NavBar() {
               <Link href='/pages'>
                 <HomeIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
               </Link>
-              <Link href='/pages/profile'>
+              <Link href='/profile'>
                 <UserIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
               </Link>
-              <Link href='/pages/stats'>
+              <Link href='/stats'>
                 <ChartBarIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
               </Link>
               <UserButton />
