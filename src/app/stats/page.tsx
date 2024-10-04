@@ -1,4 +1,3 @@
-import DayGraph from '@/components/DayGraph';
 import WatchHistory from '@/components/WatchHistory';
 import WeekDayGraph from '@/components/WeekDayGraph';
 import React from 'react';
@@ -10,6 +9,11 @@ function page() {
       <div className="flex flex-col items-center justify-center h-20">
         <h1>Stats</h1>
       </div>
+
+      <div className="flex flex-col items-center justify-center h-20">
+        <WatchHistory/>
+      </div>
+
 
       <div>
         {/* Weekday Graph for 2023 */}
