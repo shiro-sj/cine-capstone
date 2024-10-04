@@ -8,10 +8,7 @@ export default function Page() {
 
   return (
     <div>
-    {isSignedIn && <Home/>}
-    <div>
-    {!isSignedIn && <Onboarding/>}
-    </div>
+    {isSignedIn? <Home/>: <Onboarding/>}
     </div>
   );
 }

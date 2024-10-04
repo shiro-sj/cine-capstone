@@ -1,6 +1,6 @@
 'use client';  // Ensure this code runs only on the client side
 import React from 'react';
-import { useCsv } from '../../context/CsvContext';
+import { useCsv } from '../../../context/CsvContext';
 import { useDropzone } from 'react-dropzone';  // Import react-dropzone
 
 export default function CSVUpload() {
