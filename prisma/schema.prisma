@@ -20,6 +20,6 @@ model WatchHistory {
   id        Int      @id @default(autoincrement())
   title     String
   watchedAt DateTime
-  clerkId   Int
-  user      User     @relation(fields: [clerkId], references: [id])
+  userId        Int
+  user      User     @relation(fields: [userId], references: [id])
 }
