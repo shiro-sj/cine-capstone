@@ -1,6 +1,6 @@
 "use client"
 import { useUser } from "@clerk/nextjs";
-import Home from './pages/page'
+import Home from './home/page'
 import Onboarding from "./Onboarding/page";
 
 export default function Page() {

@@ -13,13 +13,13 @@ export default async function NavBar() {
           {/* SignedIn Section */}
           <SignedIn>
             <div className="flex items-center justify-between mx-40 p-4 gap-32">
-              <Link href='/pages'>
+              <Link href='/home'>
                 <HomeIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
               </Link>
-              <Link href='/pages/profile'>
+              <Link href='/profile'>
                 <UserIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
               </Link>
-              <Link href='/pages/stats'>
+              <Link href='/stats'>
                 <ChartBarIcon className="h-6 w-6 text-stone-400 hover:text-violet-300 hover:scale-125 transition duration-300 cursor-pointer" />
               </Link>
               <UserButton />

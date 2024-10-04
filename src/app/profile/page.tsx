@@ -7,8 +7,7 @@ function page() {
       <div className="flex flex-col items-center justify-center h-96">
         <CSVUpload/>
       </div>
-      <div className="flex flex-col items-center justify-center h-96">
-      </div>
+      
     </div>
   )
 }
