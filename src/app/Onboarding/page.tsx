@@ -1,14 +1,10 @@
 "use client"
 import React from 'react';
 import Image from 'next/image';
-import logo from '../public/assets/logo.png'; 
-import netflixlogo from '../public/assets/netflix-logo.png';
-import letterboxdlogo from '../public/assets/letterboxd-logo.png';
-import 'aos/dist/aos.css';
-import AOS from'aos';
-import { useEffect } from 'react';
+import logo from '../../public/assets/logo.png'; 
+import netflixlogo from '../../public/assets/netflix-logo.png';
+import letterboxdlogo from '../../public/assets/letterboxd-logo.png';
 import { useRouter } from 'next/navigation';
-import OnNavigator from '../components/OnNavigator';
 
 function Onboarding() {
     const router = useRouter();
@@ -16,20 +12,11 @@ function Onboarding() {
     const handleClick = () => {
         router.push('/sign-up'); 
     };
-
-    useEffect(() => {
-        AOS.init({
-            duration: 1000,
-            easing: 'ease-in-out',
-            once: true, 
-        });
-    }, []);
     
 
     return (
-        <div className="bg-gradient-to-br from-amber-800 via-violet-900 to-slate-800 min-h-screen flex flex-col items-center justify-center gap-40 max-w-screen">
+        <div className="bg-gradient-to-br from-amber-800 via-violet-900 to-slate-800 min-h-screen flex flex-col items-center justify-center gap-40">
             <div className='m-32 flex flex-col items-center justify-center gap-40'>
-                <header className='w-full'><OnNavigator/></header>
                 <div className="text-center flex flex-col items-center">
                     <Image src={logo} alt="Company Logo" className="max-w-60 h-auto" layout="responsive" />
                     <h1 className="text-8xl mt-4 animate-float">cine</h1>

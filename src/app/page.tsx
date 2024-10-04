@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { useUser } from "@clerk/nextjs";
 import Home from './pages/page'
 import Onboarding from "./Onboarding/page";
@@ -9,10 +8,7 @@ export default function Page() {
 
   return (
     <div>
-    {isSignedIn && <Home/>}
-    <div>
-    {!isSignedIn && <Onboarding/>}
-    </div>
+    {isSignedIn? <Home/>: <Onboarding/>}
     </div>
   );
 }

@@ -1,12 +1,10 @@
 'use client';  // Ensure this code runs only on the client side
 import React from 'react';
-import { useCsv } from '../../context/CsvContext';
-import { useRouter } from 'next/navigation';
+import { useCsv } from '../../../context/CsvContext';
 import { useDropzone } from 'react-dropzone';  // Import react-dropzone
 
 export default function CSVUpload() {
   const { setCsvData } = useCsv();  // Access setCsvData from context
-  const router = useRouter();  // Initialize router
 
   // Function to handle the file drop
   const handleDrop = (acceptedFiles: File[]) => {
@@ -16,8 +14,6 @@ export default function CSVUpload() {
       reader.onload = (e) => {
         const content = e.target?.result as string;
         parseCSV(content);
-        // Redirect the user to the home page after parsing the CSV file
-        router.push('/');
       };
       reader.readAsText(file);
     }
@@ -44,7 +40,10 @@ export default function CSVUpload() {
       return rowData;
     });
 
-    setCsvData(mappedRows.slice(0, 20));  // Save the first 20 rows to state
+    // Log the parsed CSV data to the console
+    console.log('Parsed CSV Data:', mappedRows);
+
+    setCsvData(mappedRows);  // Save the data to context
   };
 
   // Set up react-dropzone to handle file drag-and-drop
