@@ -9,6 +9,7 @@ export default function Home() {
         <div className='text-center justify-center'>
           <h1>Upload to get started</h1>
           <Link href='/profile'><button>Go to Profile</button></Link>
+          <a href="https://www.netflix.com/settings/viewing-history" target="_blank"><button>Download CSV</button></a>
         </div>
       </div>
   );
