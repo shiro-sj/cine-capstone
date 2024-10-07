@@ -1,9 +1,9 @@
 "use client"
 import React from 'react';
 import Image from 'next/image';
-import logo from '../../public/assets/logo.png'; 
-import netflixlogo from '../../public/assets/netflix-logo.png';
-import letterboxdlogo from '../../public/assets/letterboxd-logo.png';
+import logo from '../data/assets/logo.png'; 
+import netflixlogo from '../data/assets/netflix-logo.png';
+import letterboxdlogo from '../data/assets/letterboxd-logo.png';
 import { useRouter } from 'next/navigation';
 
 function Onboarding() {

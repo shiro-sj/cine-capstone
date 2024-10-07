@@ -1,5 +1,5 @@
-import WatchHistory from '@/app/components/WatchHistory';
-import WeekDayGraph from '@/app/components/WeekDayGraph';
+import WatchHistory from '@/components/WatchHistory';
+import WeekDayGraph from '@/components/WeekDayGraph';
 import React from 'react';
 
 function page() {
