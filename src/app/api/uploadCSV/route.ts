@@ -1,7 +1,7 @@
 // app/api/uploadCSV/route.ts
 import { NextResponse } from 'next/server';
-import prisma from '../../../lib/prisma';  // Assuming Prisma is set up
-import { checkUser } from '../../../lib/checkUser';  // Assuming this function checks if the user is authenticated
+import prisma from '../../lib/prisma';  // Assuming Prisma is set up
+import { checkUser } from '../../lib/checkUser';  // Assuming this function checks if the user is authenticated
 
 export async function POST(request: Request) {
   try {

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { HomeIcon, UserIcon, ChartBarIcon } from '@heroicons/react/outline';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-import { checkUser } from '@/lib/checkUser';
+import { checkUser } from '../lib/checkUser';
 
 export default async function NavBar() {
   const user = await checkUser();

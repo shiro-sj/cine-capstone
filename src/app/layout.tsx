@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { CsvProvider } from '../context/CsvContext';
 import { ClerkProvider } from "@clerk/nextjs";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/app/components/NavBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +15,6 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider afterSignOutUrl={'/Onboarding'}>
-      <CsvProvider>
       <html lang="en">
           <body>
             <NavBar/>
@@ -26,7 +24,6 @@ export default function RootLayout({
             </main>
           </body>
       </html>
-        </CsvProvider>
     </ClerkProvider>
     
   );

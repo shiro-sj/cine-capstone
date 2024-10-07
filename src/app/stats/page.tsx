@@ -1,5 +1,5 @@
-import WatchHistory from '@/components/WatchHistory';
-import WeekDayGraph from '@/components/WeekDayGraph';
+import WatchHistory from '@/app/components/WatchHistory';
+import WeekDayGraph from '@/app/components/WeekDayGraph';
 import React from 'react';
 
 function page() {
@@ -13,7 +13,6 @@ function page() {
       <div className="flex flex-col items-center justify-center h-20">
         <WatchHistory/>
       </div>
-
 
       <div>
         {/* Weekday Graph for 2023 */}
