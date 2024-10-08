@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/app/components/NavBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider afterSignOutUrl={'/Onboarding'}>
+    <ClerkProvider afterSignOutUrl={'/onboarding'}>
       <html lang="en">
           <body>
             <NavBar/>

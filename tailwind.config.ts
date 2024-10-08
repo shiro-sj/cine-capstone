@@ -14,7 +14,7 @@ const config: Config = {
         'dark-purple': "#330C2F",
       },
       fontFamily: {
-        departure: ['DepartureMono', 'Arial', 'Helvetica', 'sans-serif'],
+        departure: ['DepartureMono', 'Arial', 'Helvetica', 'sans-serif', 'FormulaCondensed'],
       },
     },
   },

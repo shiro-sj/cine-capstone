@@ -18,6 +18,14 @@
   font-style: normal;
 }
 
+@font-face{
+  font-family: 'FormulaCondensed';
+  src: url('../../public/fonts/FormulaCondensed-Bold.otf') format('otf'),
+       url('../../\/public/fonts/FormulaCondensed-Light.otf') format('otf');
+  font-weight:normal ;
+  font-style: normal;
+}
+
 
 @keyframes float {
   0%, 100% {

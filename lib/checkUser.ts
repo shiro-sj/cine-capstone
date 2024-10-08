@@ -1,6 +1,5 @@
-// app/api/connect/route.ts (API route for server-side logic)
-import { currentUser } from "@clerk/nextjs/server";  // Clerk server-side import
-import prisma from "./prisma";  // Prisma import
+import { currentUser } from "@clerk/nextjs/server";  
+import prisma from "./prisma";
 
 export async function checkUser() {
     const user = await currentUser();
