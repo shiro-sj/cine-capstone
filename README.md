@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -34,3 +35,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+=======
+<h1>cine</h1>
+<h2>A watch statistics application.</h2>
+<h3>Capstone project for the Southern Alberta Institute of Technology S.Y. 2024<br/>Created with Next.js, Prisma ORM, and Vercel.</h3>
+
+>>>>>>> 1c5581060407aa7e05456880202fb3ace4f39beb
