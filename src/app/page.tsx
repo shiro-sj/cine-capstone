@@ -1,7 +1,14 @@
-export default function Home() {
+"use client"
+import { useUser } from "@clerk/nextjs";
+import Home from "./home/page";
+import Onboarding from "./onboarding/page";
+
+export default function Page() {
+  const { isSignedIn } = useUser();
+
   return (
-    <div className="m-10">
-      <h1 className="font-departureMono tracking-wide text-8xl">cine</h1>
+    <div>
+    {isSignedIn? <Home/>: <Onboarding/>}
     </div>
   );
 }
