@@ -3,9 +3,14 @@ import React from 'react'
 
 export default function Onboarding(){
     return(
-        <div>
+        <div className='bg-black flex min-h-screen'>
+            <div className='text-4xl text-white'>
             onboarding
-            <SignInButton/>
+            <SignInButton></SignInButton>
+            
+
+            </div>
+           
         </div>
     )
-}
+};
