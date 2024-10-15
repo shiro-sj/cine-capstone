@@ -1,9 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import { WebhookEvent } from '@clerk/nextjs/server'
 
-
 export async function POST(request: Request) {
   try {
+
     //processing the request and payload
     const payload: WebhookEvent = await request.json()
     console.log(payload)
@@ -52,9 +52,9 @@ export async function POST(request: Request) {
             return new Response('Error occured -- user does not exist.', {status: 500})
         };
 
-        return Response.json({
+        return new Response(JSON.stringify({
             message: 'User deleted successfully.'
-        });
+        }));
     };
 
     if (eventType === 'user.updated'){
@@ -86,8 +86,9 @@ export async function POST(request: Request) {
 
         return Response.json({message: 'User updated successfully.', user: updatedUser})
     }
-  } catch{
+  } catch (e) {
     // something went wrong
+    console.error('Something went wrong.', e);
     return new Response('An error occured while processing the request.', {status: 500}, )
   }
 }
@@ -97,7 +98,9 @@ export async function GET() {
    try{
     const users = await prisma.user.findMany();
     return Response.json({ users });
-   } catch{
+   } catch(e){
+    console.error('Error fetching users: ', e);
+
     return new Response('An error occured while fething users.', {status: 500})
    }
    
