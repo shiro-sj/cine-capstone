@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import { error } from 'console';
 
 
 export async function POST(request: Request) {
@@ -89,8 +90,8 @@ export async function POST(request: Request) {
     }
   } catch (e) {
     // something went wrong
-    // no changes were made to the database
-    return new Response('An error occured while processing the request.', {status: 500}, e)
+    console.error('Something went wrong.', e);
+    return new Response('An error occured while processing the request.', {status: 500}, )
   }
 }
 
