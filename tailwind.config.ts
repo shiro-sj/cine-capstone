@@ -16,6 +16,10 @@ const config: Config = {
         'formulaBold': ['FormulaCondensedBold'],
         'formulaLight': ['FormulaCondensedLight'],
         'departureMono': ['DepartureMono'],
+      },
+
+      container:{
+        center:true,
       }
     },
   },
