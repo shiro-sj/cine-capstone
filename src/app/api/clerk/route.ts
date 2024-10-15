@@ -36,6 +36,59 @@ export async function POST(request: Request) {
     });
     };
 
+    if (eventType === 'user.deleted'){
+        const {id} = evt.data
+
+        const existingUser = await prisma.user.findUnique({
+            where: { clerkId: id }
+          });
+          
+          if (!existingUser) {
+            return new Response('User does not exist.', { status: 404 });
+          }
+
+        const deleteUser = await prisma.user.delete({
+            where: { clerkId: id}
+        });
+
+        if (!deleteUser){
+            return new Response('Error occured -- user does not exist.', {status: 500})
+        };
+
+        return Response.json({
+            message: 'User deleted successfully.'
+        });
+    };
+
+    if (eventType === 'user.updated'){
+        
+        const {id, username, email_addresses} = evt.data;
+
+        const existingUser = await prisma.user.findUnique({
+            where: { clerkId: id }
+          });
+          
+          if (!existingUser) {
+            return new Response('User does not exist.', { status: 404 });
+          }
+
+        const updatedUser = await prisma.user.update({
+           where:{
+            clerkId: id,
+           },
+           data:{
+            username: username as string,
+            email:email_addresses[0].email_address
+           }
+           
+        });
+
+        if(!updatedUser){
+            return new Response ('Error occurred -- no changes made.', {status: 500})
+        };
+
+        return Response.json({message: 'User updated successfully.', user: updatedUser})
+    }
   } catch (e) {
     // something went wrong
     // no changes were made to the database
