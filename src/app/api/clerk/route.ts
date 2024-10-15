@@ -4,7 +4,6 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 
 export async function POST(request: Request) {
   try {
-
     //processing the request and payload
     const payload: WebhookEvent = await request.json()
     console.log(payload)
@@ -87,9 +86,8 @@ export async function POST(request: Request) {
 
         return Response.json({message: 'User updated successfully.', user: updatedUser})
     }
-  } catch (e) {
+  } catch{
     // something went wrong
-    console.error('Something went wrong.', e);
     return new Response('An error occured while processing the request.', {status: 500}, )
   }
 }
@@ -99,9 +97,7 @@ export async function GET() {
    try{
     const users = await prisma.user.findMany();
     return Response.json({ users });
-   } catch(e){
-    console.error('Error fetching users: ', e);
-
+   } catch{
     return new Response('An error occured while fething users.', {status: 500})
    }
    
