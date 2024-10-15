@@ -9,9 +9,7 @@ export async function POST(request: Request) {
     const payload: WebhookEvent = await request.json()
     console.log(payload)
 
-    const body = JSON.stringify(payload)
-
-    let evt: WebhookEvent = payload;
+    const evt: WebhookEvent = payload;
     const eventType =  evt.type
 
     //creating a new user
@@ -92,7 +90,7 @@ export async function POST(request: Request) {
   } catch (e) {
     // something went wrong
     // no changes were made to the database
-    return new Response('An error occured while processing the request.', {status: 500})
+    return new Response('An error occured while processing the request.', {status: 500}, e)
   }
 }
 
