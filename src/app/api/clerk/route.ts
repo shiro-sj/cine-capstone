@@ -3,7 +3,6 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 
 export async function POST(request: Request) {
   try {
-
     //processing the request and payload
     const payload: WebhookEvent = await request.json()
     console.log(payload)
@@ -67,7 +66,7 @@ export async function POST(request: Request) {
           
           if (!existingUser) {
             return new Response('User does not exist.', { status: 404 });
-          }
+          };
 
         const updatedUser = await prisma.user.update({
            where:{
@@ -85,13 +84,13 @@ export async function POST(request: Request) {
         };
 
         return Response.json({message: 'User updated successfully.', user: updatedUser})
-    }
+    };
   } catch (e) {
     // something went wrong
     console.error('Something went wrong.', e);
     return new Response('An error occured while processing the request.', {status: 500}, )
-  }
-}
+  };
+};
 
 export async function GET() {
 
@@ -104,4 +103,4 @@ export async function GET() {
     return new Response('An error occured while fething users.', {status: 500})
    }
    
-  }
+  };
