@@ -3,8 +3,7 @@ import React from 'react'
 
 export default function Home(){
     return(
-        <div>
-            home
+        <div className='container mx-auto'>
             <UserButton/>
         </div>
     )
