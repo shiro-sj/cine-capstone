@@ -1,4 +1,4 @@
-import { SignUpButton } from '@clerk/nextjs'
+import { SignIn, SignInButton, SignUpButton } from '@clerk/nextjs'
 import React from 'react'
 
 export default function Landing(){
@@ -7,6 +7,7 @@ export default function Landing(){
             <div className='text-4xl text-white'>
             onboarding
             <SignUpButton/>
+            <SignInButton/>
             </div>
            
         </div>
