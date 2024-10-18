@@ -103,11 +103,17 @@ export default function CSVUploader() {
   
               if (row.Title.includes(':')) {
                 try {
-                  title = row.Title.split(':')[0].trim();
-                  console.log(`Attempting to fetch series ID for: ${title}`);
+                  const seriesId = await fetchSeriesID(searchUrl, title);
+                  const parts = row.Title.split(':');
+
+                  if (parts.length == 2){
+                    title = parts[0];
+                    console.log(`Attempting to fetch series ID for: ${title}`);
+                  }
+                  
                   
                   // try fetching the series ID first
-                  const seriesId = await fetchSeriesID(searchUrl, title);
+                  
                   
                   if (seriesId) {
                     id = seriesId;
