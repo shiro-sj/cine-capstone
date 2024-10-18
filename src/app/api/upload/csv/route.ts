@@ -1,12 +1,10 @@
 // import { prisma } from '@/lib/prisma';
-import { useAuth } from '@clerk/nextjs';
-import { NextResponse } from 'next/server';
 
 
 export async function POST(request: Request) {
   try {
     // Parse the incoming JSON body (use request.json() for App Router)
-    const csvData: { title: string; season: string; episode:string; watchedAt: string; tmdbDetails: {}}[] = await request.json();
+    const csvData: { title: string; watchedAt: string; isTvShow:boolean; id:string;}[] = await request.json();
     console.log('Received CSV Data:', csvData); 
 
     // const {userId, isLoaded} = useAuth();
@@ -48,12 +46,20 @@ export async function POST(request: Request) {
     //         })
     //     ); 
     // }
-    // return new Response(JSON.stringify({message: 'No user signed in', status: 500}))
-} catch{
 
-};
+    return new Response(JSON.stringify({ message: 'CSV data processed successfully', status: 200 }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    console.error('Error processing CSV data:', error);
 
-};
+    return new Response(JSON.stringify({ message: 'Error processing CSV data', status: 500 }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+}
 
 // export async function GET() {
 //     try {

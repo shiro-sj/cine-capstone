@@ -3,117 +3,157 @@ import { useDropzone } from 'react-dropzone';
 import Papa from 'papaparse';
 import axios from 'axios';
 
-// Defining the CSV row format
+
 interface CSVRow {
   Title: string;
   Date: string;
 }
 
+
 export default function CSVUploader() {
   const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
-  const [csvData, setCsvData] = useState<{ title: string; watchedAt: string; season?: string; episode?: string; tmdbDetails?: any }[]>([]);
+  const [csvData, setCsvData] = useState<{ title: string; watchedAt: string; isTvShow: boolean; id: string; data:{} }[]>([]);
   const [uploading, setUploading] = useState(false);
 
-  // TMDB API
-  const fetchMediaDetails = async (title: string, isTVShow: boolean = false) => {
-    try {
-      if (isTVShow) {
-        const tvResponse = await axios.get(`https://api.themoviedb.org/3/search/tv`, {
-          params: {
-            api_key: TMDB_API_KEY,
-            query: title,
-            language: 'en-US',
-          },
-        });
+  //function for fetching movie id from TMDB
+  async function fetchMovieID(searchUrl:string, title: string){
+    try{
+      const response = await axios.get(`${searchUrl}/movie`, {
+        params:{
+          api_key: TMDB_API_KEY,
+          query: title,
+        },
+      }) 
 
-        if (tvResponse.data.results && tvResponse.data.results.length > 0) {
-          return { type: 'tv', details: tvResponse.data.results[0] };
-        }
-      } else {
-        const movieResponse = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
-          params: {
-            api_key: TMDB_API_KEY,
-            query: title,
-            language: 'en-US',
-          },
-        });
+      return response.data.results[0].id;
 
-        if (movieResponse.data.results && movieResponse.data.results.length > 0) {
-          return { type: 'movie', details: movieResponse.data.results[0] };
-        }
-      }
-
-      console.log(`No details found for ${title}`);
-      return null;
-    } catch (error) {
-      console.error(`Error fetching media details for ${title}:`, error);
-      return null;
-    }
+    }catch (e){
+      console.log('Error fetching movie ID: ', e)
+    };
   };
+
+  //function for fetching movie id from TMDB
+  async function fetchSeriesID(searchUrl:string, title: string){
+    try{
+      const response = await axios.get(`${searchUrl}/tv`, {
+        params:{
+          api_key: TMDB_API_KEY,
+          query: title,
+        },
+      })
+      return response.data.results[0].id;
+
+    }catch (e){
+      console.log('Error fetching Series ID: ', e)
+    };
+  };
+
+   //function for fetching series by id from TMDB
+  async function findSeriesByID(findUrl:String, id:string){
+    try{
+      const response = await axios.get(`${findUrl}/tv/${id}`, {
+        params:{
+          api_key: TMDB_API_KEY
+        }
+      })
+      return response.data[0];
+
+    }catch(e){
+      console.log('Error fetching series data: ', e)
+    }
+
+  }
+
+  //function for fetching movies by id from TMDB
+  async function findMovieByID(findUrl:String, id:string){
+    try{
+      const response = await axios.get(`${findUrl}/movie/${id}`, {
+        params:{
+          api_key: TMDB_API_KEY
+        }
+      })
+      return response.data[0];
+
+    }catch(e){
+      console.log('Error fetching movie data: ', e)
+    }
+
+  }
 
   // Parse the CSV content
   const parseCSV = (content: string) => {
     return new Promise<void>((resolve) => {
+      // Papaparse
       Papa.parse(content, {
         header: true,
         skipEmptyLines: true,
         complete: async (result: { data: CSVRow[] }) => {
-          console.log('Parsed CSV Result:', result);
-
-          const mappedRows = (result.data as CSVRow[]).map((row): { title: string; watchedAt: string; season?: string; episode?: string } | null => {
-            const title = row.Title ? row.Title.replace(/"/g, '').trim() : '';
-            const watchedAt = row.Date ? row.Date.replace(/"/g, '').trim() : '';
-
-            if (!title || !watchedAt) {
-              return null;
-            }
-
-            const isTVShow = title.includes(':');
-            let showTitle = title;
-            let season: string | undefined = undefined;
-            let episode: string | undefined = undefined;
-
-            if (isTVShow) {
-              const parts = title.split(':');
-              if (parts.length === 3) {
-                showTitle = parts[0].trim();
-                season = parts[1].trim();
-                episode = parts[2].trim();
+          // map through rows
+          await Promise.all(
+            result.data.map(async (row) => {
+              const searchUrl = 'https://api.themoviedb.org/3/search';
+              const findUrl = 'https://api.themoviedb.org/3';
+              const watchDate = row.Date;
+              let id: string | null = null;
+              let isTvShow = false;
+              let title: string = "";
+              let data = {};
+  
+              if (row.Title.includes(':')) {
+                try {
+                  title = row.Title.split(':')[0].trim();
+                  console.log(`Attempting to fetch series ID for: ${title}`);
+                  
+                  // try fetching the series ID first
+                  const seriesId = await fetchSeriesID(searchUrl, title);
+                  data = await findSeriesByID()
+                  
+                  if (seriesId) {
+                    id = seriesId;
+                    isTvShow = true;
+                    // console.log(`Series ID found for: ${title} with ID: ${id}`);
+                  } else {
+                    title = row.Title.trim();
+                    console.log(`No series found for: ${title}. Trying to fetch Movie ID...`);
+                    id = await fetchMovieID(searchUrl, title);
+                    
+                    
+                    // console.log(`Movie ID found for: ${title} with ID: ${id}`);
+                  }
+                } catch (e) {
+                  console.error(`Error processing title: ${title}`, e);
+                }
+              } else {
+                try {
+                  title = row.Title.trim();
+                  id = await fetchMovieID(searchUrl, title);
+                  // console.log(`Movie ID found for title: ${title} with ID: ${id}`);
+                } catch (e) {
+                  console.error(`Error fetching Movie ID for title: ${title}`, e);
+                }
               }
-            }
-
-            return {
-              title: showTitle,
-              season,
-              episode,
-              watchedAt,
-            };
-          }).filter((row): row is { title: string; watchedAt: string; season?: string; episode?: string } => row !== null);
-
-          const detailedRows = await Promise.all(
-            mappedRows.map(async (row) => {
-              const isTVShow = row.season !== undefined;
-              const tmdbDetails = await fetchMediaDetails(row.title, isTVShow);
-              return {
-                ...row,
-                tmdbDetails,
-              };
+  
+              if (id) {
+                //setData for backend processing...
+                setCsvData((prevData) => [
+                  ...prevData,
+                  { title: title, watchedAt: watchDate, isTvShow, id, data },
+                ]);
+              } else {
+                console.error('ID not found for title:', row.Title);
+              }
             })
-          );
 
-          setCsvData(detailedRows.map(row => ({
-            title: row.title || "",
-            watchedAt: row.watchedAt || "",
-            season: row.season || undefined,
-            episode: row.episode || undefined,
-            tmdbDetails: row.tmdbDetails,
-          })));
+            
+          );
+          
           resolve();
-        },
+        }
       });
     });
   };
+  
 
   const handleDrop = async (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
