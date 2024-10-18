@@ -57,7 +57,7 @@ export default function CSVUploader() {
           api_key: TMDB_API_KEY
         }
       })
-      return response.data[0];
+      return response.data;
 
     }catch(e){
       console.log('Error fetching series data: ', e)
@@ -66,14 +66,15 @@ export default function CSVUploader() {
   }
 
   //function for fetching movies by id from TMDB
-  async function findMovieByID(findUrl:String, id:string){
+  async function findMovieByID(findUrl:String, id:string |null){
     try{
       const response = await axios.get(`${findUrl}/movie/${id}`, {
         params:{
           api_key: TMDB_API_KEY
         }
       })
-      return response.data[0];
+      console.log(response.data.id);
+      return response.data;
 
     }catch(e){
       console.log('Error fetching movie data: ', e)
@@ -95,7 +96,7 @@ export default function CSVUploader() {
               const searchUrl = 'https://api.themoviedb.org/3/search';
               const findUrl = 'https://api.themoviedb.org/3';
               const watchDate = row.Date;
-              let id: string | null = null;
+              let id: string|null = null;
               let isTvShow = false;
               let title: string = "";
               let data = {};
@@ -107,7 +108,6 @@ export default function CSVUploader() {
                   
                   // try fetching the series ID first
                   const seriesId = await fetchSeriesID(searchUrl, title);
-                  data = await findSeriesByID()
                   
                   if (seriesId) {
                     id = seriesId;
@@ -117,8 +117,7 @@ export default function CSVUploader() {
                     title = row.Title.trim();
                     console.log(`No series found for: ${title}. Trying to fetch Movie ID...`);
                     id = await fetchMovieID(searchUrl, title);
-                    
-                    
+
                     // console.log(`Movie ID found for: ${title} with ID: ${id}`);
                   }
                 } catch (e) {
@@ -128,6 +127,7 @@ export default function CSVUploader() {
                 try {
                   title = row.Title.trim();
                   id = await fetchMovieID(searchUrl, title);
+                  data = await findMovieByID(findUrl, id);
                   // console.log(`Movie ID found for title: ${title} with ID: ${id}`);
                 } catch (e) {
                   console.error(`Error fetching Movie ID for title: ${title}`, e);
@@ -140,9 +140,11 @@ export default function CSVUploader() {
                   ...prevData,
                   { title: title, watchedAt: watchDate, isTvShow, id, data },
                 ]);
-              } else {
+
+                
                 console.error('ID not found for title:', row.Title);
               }
+
             })
 
             
