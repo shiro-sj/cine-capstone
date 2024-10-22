@@ -1,4 +1,4 @@
-// import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 
 export async function POST(request: Request) {
@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const csvData: { title: string; watchedAt: string; isTvShow:boolean; id:string;}[] = await request.json();
     console.log('Received CSV Data:', csvData); 
 
-    // const {userId, isLoaded} = useAuth();
+    //const {userId, isLoaded} = useAuth();
 
     // Adding data to clerk
     
