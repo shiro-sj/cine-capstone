@@ -16,23 +16,6 @@ export default function CSVUploader() {
 
   const [csvData, setCsvData] = useState<{ title: string; watchedAt: string; isTvShow: boolean; id: string; data:{} }[]>([]);
 
-  //function for fetching movie id from TMDB
-  async function fetchDetails(searchUrl:string, title: string){
-    try{
-      const response = await axios.get(`${searchUrl}/multi`, {
-        params:{
-          api_key: TMDB_API_KEY,
-          query: title,
-        },
-      }) 
-
-      return response.data.results;
-
-    }catch (e){
-      console.log('Error fetching ID: ', e)
-    };
-  };
-
   async function searchMovieID(searchUrl: string, title:string){
     try {
       const response = await axios.get(`${searchUrl}/movie`,{
@@ -61,24 +44,32 @@ export default function CSVUploader() {
     }
   }
 
-  //function for fetching movie id from TMDB
-
-
    //function for fetching series by id from TMDB
-  async function findSeriesByID(findUrl:String, id:string){
+  async function findSeasons(findUrl:String, id:string|null){
     try{
-      const response = await axios.get(`${findUrl}/tv/${id}`, {
-        params:{
-          api_key: TMDB_API_KEY
-        }
-      })
-      return response.data;
+     const response = await findSeriesByID(findUrl, id)
+
+     return response.seasons;
 
     }catch(e){
       console.log('Error fetching series data: ', e)
     }
-
   };
+
+  async function findSeasonName(findUrl:String, id: string|null, season: number, seasonName: string){
+    try {
+      const response = await axios.get(`${findUrl}/tv/${id}/season/${season}`, {params:{
+        api_key:TMDB_API_KEY
+      }})
+      
+      return response.data
+      
+    } catch (error) {
+      
+    }
+  }
+
+
 
   //function for fetching movies by id from TMDB
   async function findMovieByID(findUrl:String, id:string |null){
@@ -95,10 +86,24 @@ export default function CSVUploader() {
     }
 
   };
+  async function findSeriesByID(findUrl:String, id:string |null){
+    try{
+      const response = await axios.get(`${findUrl}/tv/${id}`, {
+        params:{
+          api_key: TMDB_API_KEY
+        }
+      })
+      return response.data;
 
-  async function findEpisode(findUrl:String, id:string, episodeName:String){
+    }catch(e){
+      console.log('Error fetching movie data: ', e)
+    }
+
+  };
+
+  async function findEpisode(findUrl:String, id:string | null, episodeName:String, season: String){
     try {
-      const response = await axios.get(`${findUrl}/tv/${id}/season/1`,{
+      const response = await axios.get(`${findUrl}/tv/${id}/season/${season}`,{
         params:{
           api_key: TMDB_API_KEY
         }
@@ -106,12 +111,11 @@ export default function CSVUploader() {
 
       for (let episodeNumber in response.data.episodes){
         let name = response.data.episodes[episodeNumber].name
-        if (name == episodeName){
+        if (name.includes(episodeName)){
           return response.data.episodes[episodeNumber];
         }
       }
 
-      return response.data;
     } catch (error) {
       
     }
@@ -137,6 +141,7 @@ const parseCSV = (content: string) => {
             let isTvShow = false;
             let title: string = "";
             let episodeName: string | null = null;
+            let season: string |null = null;
             let data = {};
 
             if (row.Title.includes(':')) {
@@ -152,7 +157,8 @@ const parseCSV = (content: string) => {
                     id = await searchSeriesID(searchUrl, title)
 
                     if (id){
-                      console.log(await findEpisode(findUrl, id, episodeName))
+                      season = '1';
+                      console.log(await findEpisode(findUrl, id, episodeName, season))
                       isTvShow = true;
                     } else{
                       title = row.Title.trim();
@@ -164,10 +170,46 @@ const parseCSV = (content: string) => {
                   }
                   break;
                 case 3:
+                  try {
                   title = parts[0].trim();
-                  const seasonNumber= parts[1].trim().match(/\d/);;
-                  if (seasonNumber){
-                    console.log(`Contains season number: ${seasonNumber}`)
+                  episodeName = parts[2].trim();
+                  id = await searchSeriesID(searchUrl, title)
+
+                  if (id){
+                    const seasonNumber= parts[1].trim().match(/\d+/);
+                    if (seasonNumber){
+                      season = seasonNumber[0]
+                      console.log(await findEpisode(findUrl, id , episodeName, season)) 
+                    }else{
+                      title = parts[0].trim();
+                      episodeName = parts[2].trim()
+                      const seasonName = parts[1].trim();                    
+                      id = await searchSeriesID(searchUrl, title);
+                      // console.log(await findSeriesByID(findUrl, id))
+                      // console.log(await findSeasons(findUrl, id));
+                      const seasons = await findSeasons(findUrl, id)
+
+                      for (let i = 0; i< seasons.length ; i++){
+                        const data = await findSeasonName(findUrl, id, i, seasonName)
+                        console.log(data);
+                        
+                        
+
+                        // if (await findEpisode(findUrl, id, episodeName, seasonNumber)){
+                        //   const episodeData = findEpisode(findUrl, id, episodeName, seasonNumber)
+                        //   console.log(episodeData);
+                        // } else {
+                        //   continue
+                        // }
+                      } 
+                      
+
+                      // console.log(findEpisode(findUrl, id, episodeName, season))
+                    }
+                  } 
+                  } catch (error) {
+                    console.log(error)
+                    
                   }
                   
                   break;
