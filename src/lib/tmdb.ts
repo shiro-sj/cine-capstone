@@ -37,11 +37,17 @@ try {
     }
     })
 
+    if (response.data.results.length >1){
+        console.log(`found more than one result for ${title}`)
+    }
+
     for (let result in response.data.results){
     if (title === response.data.results[result].name || title === response.data.results[result].original_name){
         return response.data.results[result].id
     }
     }
+
+    
 } catch (e) {
     // console.error(`Error fetching series id for ${title}`,e)
 }

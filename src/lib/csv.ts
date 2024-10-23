@@ -19,7 +19,7 @@ export const parseCSV = (content: string) => {
       complete: async (result: { data: CSVRow[] }) => {
         const rows = result.data;
         // map through rows
-        await Promise.all(
+        const csvData = await Promise.all(
           rows.map(async (row) => {
             return queue.add(async () => {
               const searchUrl = 'https://api.themoviedb.org/3/search';
@@ -159,6 +159,8 @@ export const parseCSV = (content: string) => {
                 id = await searchMovieID(searchUrl, title);
                 console.log(title, id, await findMovieByID(findUrl, id));
               }
+
+              
             });
           })
         );
