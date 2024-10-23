@@ -1,10 +1,11 @@
 'use client';
-import { useAuth } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
 import FriendRequest from '../../../components/friendRequest';
+import RespondRequest from '../../../components/sentRequests';
 
 export default function ProfilePage({ params }) {
-    const { userId, isSignedIn } = useAuth(); // userId = clerkId
+    const { user, isSignedIn } = useUser(); // userId = clerkId
 
     const username = params.Name; 
 
@@ -50,8 +51,8 @@ export default function ProfilePage({ params }) {
         <div>
             {isSignedIn ? (
                 <FriendRequest 
-                    sessionUserId={userId}  // clerkId
-                    requestUserId={profileData.clerkId}  // DB clerkId
+                    sessionUserId={user.username} 
+                    requestUserId={profileData.username}  
                 />
             ) : (
                 <p>You are not logged in</p>
@@ -60,15 +61,18 @@ export default function ProfilePage({ params }) {
             <h2>User ID: {profileData?.id}</h2>
             <p>Email: {profileData?.email}</p>
             <p>Profile Clerk ID: {profileData?.clerkId}</p>
-            <h3>Current User Clerk ID: {userId}</h3>
+            <h3>Current User Clerk ID: {user.username}</h3>
             <br />
             <h1>Friend Requests</h1>
             <h3>Received Requests</h3>
             <ul>
                 {receivedRequests.map((request) => (
-                    <li key={request.id}>
-                        From: {request.senderId}
-                    </li>
+                    <ul>
+                    {receivedRequests.map((request) => (
+                        <RespondRequest key={request.id} request={request} />
+                    ))}
+                </ul>
+                
                 ))}
             </ul>
             <h3>Sent Requests</h3>

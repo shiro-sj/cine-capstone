@@ -11,25 +11,24 @@ export async function GET(request: Request) {
 
   //user info
   try {
+    
     const user = await prisma.user.findFirst({
       where: { username: profileUsername },
     });
-
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     //sent requests
     const sentFriendRequests = await prisma.friendRequests.findMany({
-      where: {senderId: user.clerkId},
+      where: {senderName: user.username},
     })
 
     //recieved requests
     const  recievedFriendRequests = await prisma.friendRequests.findMany({
-      where:{receiverId : user.clerkId}
+      where:{receiverName : user.username}
     })
-
-    console.log('user: ',user,', sent ', sentFriendRequests, ', recieved: ',recievedFriendRequests)
+    console.log(user,sentFriendRequests,recievedFriendRequests)
 
     return NextResponse.json({ user,sentFriendRequests,recievedFriendRequests }, { status: 200 });
   } catch (error) {

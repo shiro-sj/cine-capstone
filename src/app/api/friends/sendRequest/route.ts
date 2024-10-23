@@ -17,10 +17,14 @@ export async function POST(request: Request) {
     const existingRequest = await prisma.friendRequests.findFirst({
       where: {
         AND:[
-        {senderId:senderId},
-        {receiverId: receiverId},
+        {senderName:senderId},
+        {receiverName: receiverId},
       ]},
     });   
+
+    const requestData = 
+    {senderName: senderId,
+    receiverName: receiverId,}
 
     if (existingRequest) {
       return NextResponse.json({ error: 'Friend request already sent' }, { status: 400 });
@@ -28,12 +32,15 @@ export async function POST(request: Request) {
 
     // Create a new friend request
     const friendRequest = await prisma.friendRequests.create({
-      data: {
-        senderId: senderId,
-        receiverId: receiverId,
-      },
+      data: requestData,
     });
-      
+    
+    // //update both user table friend requests
+    // const senderUser = await prisma.user.update({
+    //   where:{clerkId : senderId},
+    //   data:{}
+    // })
+
 
 
     return NextResponse.json({ message: 'Friend request sent successfully', friendRequest }, { status: 200 });

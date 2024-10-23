@@ -21,7 +21,7 @@ export default function FriendRequest({ sessionUserId, requestUserId }) {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccessMessage('Friend request sent successfully!');
+        setSuccessMessage('Friend request sent successfully!', data);
       } else {
         setError(data.error || 'Error sending friend request');
       }
