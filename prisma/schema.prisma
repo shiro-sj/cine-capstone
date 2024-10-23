@@ -13,15 +13,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  username String
-  clerkId String @unique
-  email String  @unique
+model User {
+  id          Int           @id @default(autoincrement())
+  username    String
+  clerkId     String         @unique
+  email       String         @unique
   watchHistory WatchHistory[]
-  sentRequests FriendRequests[] @relation("SentRequests")
+  sentRequests    FriendRequests[] @relation("SentRequests")
   receivedRequests FriendRequests[] @relation("ReceivedRequests")
-  friends Friend[] @relation("UserFriends")
+  friends         Friend[]          @relation("Friends_user")
+  friendOf        Friend[]          @relation("Friends_friend")
 }
 
 model WatchHistory {
@@ -33,25 +34,20 @@ model WatchHistory {
 }
 
 model Friend {
- id        Int      @id @default(autoincrement())
- userId    Int
- friendId  Int
- user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- friend    User     @relation(fields: [friendId], references: [id], onDelete: Cascade)
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  friendId  Int
+  user      User     @relation("Friends_user", fields: [userId], references: [id], onDelete: Cascade)
+  friend    User     @relation("Friends_friend", fields: [friendId], references: [id], onDelete: Cascade)
 }
 
-model FriendRequests{
- id         Int      @id @default(autoincrement())
- senderId   Int
- receiverId Int
- status     FriendRequestStatus @default(PENDING)
- createdAt  DateTime @default(now())
- sender     User     @relation("SentRequests", fields: [senderId], references: [id])
- receiver   User     @relation("ReceivedRequests", fields: [receiverId], references: [id])
-}
 
-enum FriendRequestsStatus{
-  PENDING
-  ACCEPTED
-  REJECTED
+model FriendRequests {
+  id         Int      @id @default(autoincrement())
+  senderId   Int
+  receiverId Int
+  createdAt  DateTime @default(now())
+
+  sender     User     @relation("SentRequests", fields: [senderId], references: [id])
+  receiver   User     @relation("ReceivedRequests", fields: [receiverId], references: [id])
 }

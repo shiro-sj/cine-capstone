@@ -6,6 +6,7 @@ export async function GET(request : Request){
     const searchTerm = searchParams.get('query') || '';
 
     try{
+        console.log(searchTerm)
         if (!searchTerm){
             return NextResponse.json({ users: []})
         }
