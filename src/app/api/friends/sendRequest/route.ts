@@ -2,54 +2,47 @@ import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const { senderId, receiverId } = await request.json();
+  const { senderName, receiverName } = await request.json();
 
-  if (!senderId || !receiverId) {
+  // Validate the input
+  if (!senderName || !receiverName) {
     return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
   }
 
-  if(senderId === receiverId){
-    return NextResponse.json({ error: 'sender cannot be reciever' }, { status: 400 });
+  // Ensure the sender and receiver are not the same
+  if (senderName === receiverName) {
+    return NextResponse.json({ error: 'Sender cannot be receiver' }, { status: 400 });
   }
 
   try {
     // Check if a friend request already exists
     const existingRequest = await prisma.friendRequests.findFirst({
       where: {
-        AND:[
-        {senderName:senderId},
-        {receiverName: receiverId},
-      ]},
-    });   
+        AND: [
+          { senderUserName: senderName },
+          { receiverUserName: receiverName },
+        ],
+      },
+    });
 
-    const requestData = 
-    {senderName: senderId,
-    receiverName: receiverId,}
-
+    // If a request already exists, return an error
     if (existingRequest) {
       return NextResponse.json({ error: 'Friend request already sent' }, { status: 400 });
     }
 
     // Create a new friend request
     const friendRequest = await prisma.friendRequests.create({
-      data: requestData,
+      data: {
+        senderUserName: senderName,
+        receiverUserName: receiverName,
+      },
     });
-    
-    // //update both user table friend requests
-    // const senderUser = await prisma.user.update({
-    //   where:{clerkId : senderId},
-    //   data:{}
-    // })
 
-
-
+    // Return success response
     return NextResponse.json({ message: 'Friend request sent successfully', friendRequest }, { status: 200 });
   } catch (error) {
     console.error('Error sending friend request:', error);
-    return new Response(
-      JSON.stringify({ message: 'Error sending friend request', status: 500 }),
-      { status: 500 }
-    );
+    // Return a server error response
+    return NextResponse.json({ error: 'Error sending friend request' }, { status: 500 });
   }
 }
-

@@ -35,7 +35,7 @@ export default function SearchBar() {
                 <ul>
                     {results.map((user) => (
                         <li key = {user.id}>
-                            {user.username}
+                            <a href= {`/profile/${user.username}`}>{user.username}</a>
                         </li>
                     ))}
                 </ul>

@@ -10,8 +10,7 @@ export async function GET(request: Request) {
   }
 
   //user info
-  try {
-    
+  try {    
     const user = await prisma.user.findFirst({
       where: { username: profileUsername },
     });
@@ -19,18 +18,26 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    const friends = await prisma.friend.findMany({
+      where: {
+        username: profileUsername   // Assuming `username` is a field in your `Friend` model
+      },
+      include: {
+        user: true
+      }
+    });
+
     //sent requests
     const sentFriendRequests = await prisma.friendRequests.findMany({
-      where: {senderName: user.username},
+      where: {senderUserName: profileUsername}
     })
 
     //recieved requests
     const  recievedFriendRequests = await prisma.friendRequests.findMany({
-      where:{receiverName : user.username}
+      where: {receiverUserName: profileUsername}
     })
-    console.log(user,sentFriendRequests,recievedFriendRequests)
-
-    return NextResponse.json({ user,sentFriendRequests,recievedFriendRequests }, { status: 200 });
+    
+    return NextResponse.json({ user,sentFriendRequests,recievedFriendRequests,friends }, { status: 200 });
   } catch (error) {
     console.error('Error fetching data:', error);
     return NextResponse.json(

@@ -10,22 +10,26 @@ export default function FriendRequest({ sessionUserId, requestUserId }) {
     setError(null);
     setSuccessMessage(null);
     
+    if (!sessionUserId || !requestUserId) {
+      setError('Both sender and receiver IDs must be provided.');
+      setLoading(false);
+      return;
+    }
+
     try {
-      
       const response = await fetch(`/api/friends/sendRequest`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senderId: sessionUserId, receiverId: requestUserId }),
+        body: JSON.stringify({ senderName: sessionUserId, receiverName: requestUserId }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setSuccessMessage('Friend request sent successfully!', data);
+        setSuccessMessage('Friend request sent successfully!');
       } else {
         setError(data.error || 'Error sending friend request');
       }
-
     } catch (e) {
       console.error('Error sending friend request:', e);
       setError('Error sending friend request');
