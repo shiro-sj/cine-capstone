@@ -1,8 +1,8 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
-import FriendRequest from '../../../components/friendRequest';
-import RespondRequest from '../../../components/respondRequests';
+import RespondRequest from '@/app/components/respondRequest';
+import NavBar from '@/app/components/navbar';
 
 export default function ProfilePage({ params }) {
     const { user, isSignedIn } = useUser();
@@ -60,6 +60,7 @@ export default function ProfilePage({ params }) {
 
     return (
         <div>
+            <NavBar/>
             <h1>Profile of {profileData?.username}</h1>
             <h3>You are: {user?.username || user?.id}</h3> {/* Fallback to id if username is not available */}
 
