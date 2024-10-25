@@ -29,8 +29,5 @@ export async function GET(request : Request){
             JSON.stringify({message: 'Error while fetching users' , status : 500}), {status: 500}
         )
     }
-
-
-
 }
 

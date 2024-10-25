@@ -23,15 +23,12 @@ export async function POST(request:Request) {
     const sender = await prisma.user.findFirst({
       where:{username: requestSender}
     })
-
     const reciver = await prisma.user.findFirst({
       where:{username: requestResponder}
     })
-
     if(!sender || !reciver){
       return NextResponse.json({ error: 'user not found' }, { status: 404 });
     }
-
     if (action === 'ACCEPT') {
       await prisma.friend.createMany({
         data: [
@@ -39,7 +36,7 @@ export async function POST(request:Request) {
           { username: friendRequest.receiverUserName, userId:reciver.id, friendname: friendRequest.senderUserName, friendId: sender.id },
         ],
       });
-
+      
     console.log('created friends')
       await prisma.friendRequests.delete({
         where: { id: friendRequest.id },

@@ -1,3 +1,4 @@
+"use client"
 import { Entry } from '@/lib/interfaces';
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
@@ -12,7 +13,7 @@ export default function WatchHistory() {
 
     const fetchWatchHistory = async () => {
         try {
-            const response = await axios.get('/app/api/upload/csv');
+            const response = await axios.get('/api/upload/csv');
             setWatchHistory(response.data.watchHistoryData);
         } catch (error) {
             console.error('Error fetching watch history:', error);

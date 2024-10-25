@@ -1,10 +1,14 @@
 import { prisma } from '@/lib/prisma';
+
+
+import { currentUser } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
-
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const profileUsername = searchParams.get('username');
-
+    const user = await currentUser();
+    let profileUsername;
+    if (user){
+        profileUsername = user.username;
+    }
   if (!profileUsername) {
     return NextResponse.json({ error: 'Invalid or missing username' }, { status: 400 });
   }
