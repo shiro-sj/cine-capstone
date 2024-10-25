@@ -1,13 +1,16 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from "next/server";
+
 export async function GET(request : Request){
     const { searchParams } = new URL(request.url)
     const searchTerm = searchParams.get('query') || '';
+
     try{
         console.log(searchTerm)
         if (!searchTerm){
             return NextResponse.json({ users: []})
         }
+
         const users = await prisma.user.findMany({
             where :{
                 username : {
@@ -16,7 +19,9 @@ export async function GET(request : Request){
                 },
             },
         });
+
         console.log(users)
+
         return NextResponse.json({users});
     }catch(e){
         console.error('Error fetching users' , e)
@@ -25,3 +30,4 @@ export async function GET(request : Request){
         )
     }
 }
+
