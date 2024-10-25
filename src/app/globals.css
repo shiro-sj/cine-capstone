@@ -41,3 +41,8 @@ body {
     text-wrap: balance;
   }
 }
+
+.pageContainer{
+  @apply flex min-h-screen min-w-full
+}
+
