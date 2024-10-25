@@ -47,7 +47,8 @@ export default function WatchHistory() {
             {loading ? (
                 <p>Loading data...</p>
             ) : (
-                <ul>
+                <div className='history'>
+                    <ul>
                     {filteredHistory.map((entry) => (
                         <li key={entry.id} className='flex flex-row p-10 m-5 bg-slate-900 rounded-xl justify-around items-center'>
                             {entry.isTvShow ? (
@@ -65,6 +66,9 @@ export default function WatchHistory() {
                         </li>
                     ))}
                 </ul>
+
+                </div>
+                
             )}
         </div>
     );

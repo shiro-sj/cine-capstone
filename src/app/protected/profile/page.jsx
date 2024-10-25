@@ -1,120 +1,142 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import FriendRequest from '@/app/components/friendRequest';
-import RespondRequest from '@/app/components/respondRequests';
-import CSVUploader from "@/app/components/csvUploader"
-import NavBar from "@/app/components/navbar"
+import RespondRequest from '@/app/components/respondRequest';
+import CSVUploader from "@/app/components/csvUploader";
+import Sidebar from '@/app/components/sidebars/sidebar';
+import Subsidebar from '@/app/components/sidebars/subsidebar';
+
+export default function Profile() {
+
+    const [subItems, setSubItems] = useState([])
+
+    const handleSidebarClick = (type) => {
+        switch (type) {
+          case 'stats':
+            setSubItems(['month', 'year', 'lifetime', 'history']);
+            break;
+          case 'profile':
+            setSubItems(['profile']);
+            break;
+          case 'extras':
+            setSubItems(['', 'extra2']);
+            break;
+          default:
+            setSubItems(['search', 'friends', 'log', 'diary' ]);
+        }
+      };
 
 
-export default function Profile(){
     const { user, isSignedIn } = useUser();
-    let username;
-    if (isSignedIn){
-        username = user.username;
-    }
-    
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [receivedRequests, setReceivedRequests] = useState([]);
     const [sentRequests, setSentRequests] = useState([]);
     const [friends, setFriends] = useState([]);
-    
     const [isUser, setIsUser] = useState(false);
+
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await fetch(`/api/profile`);
-                const data = await response.json();
-                if (response.ok) {
-                    setProfileData(data.user);
+                const response = await axios.get('/api/prisma/currentUser');
+                const data = response.data;
+
+                if (response.status === 200) {
+                    setProfileData(data.currentUser);
                     setReceivedRequests(data.recievedFriendRequests || []);
                     setSentRequests(data.sentFriendRequests || []);
                     setFriends(data.friends || []);
+
                     // Check if the profile matches the logged-in user
-                    if (data.user.username === user?.username || data.user.id === user?.id) {
+                    if (data.currentUser.username === user?.username || data.user?.id === user?.id) {
                         setIsUser(true);
                     }
                 } else {
                     setError(data.error || 'An error occurred');
                 }
-                
             } catch (err) {
                 setError("Error fetching profile data");
+                console.error(err);  // Log the error for debugging
             } finally {
                 setLoading(false);
             }
         };
+
         if (user) {
             fetchProfile();
         }
-    }, [username, user]);
+    }, [user]);
+
     if (loading) {
         return <div>Loading...</div>;
     }
     if (error) {
         return <div>Error: {error}</div>;
     }
-    return(
-        <div>
-            <NavBar/>
-            <h1>Profile</h1>
-            <CSVUploader/>
 
-            <h1>Welcome, {username}</h1>
-            {/* Friend request actions */}
-            {isSignedIn && !isUser && (
-                <FriendRequest 
-                    sessionUserId={user?.username || user?.id} 
-                    requestUserId={profileData?.username}  
-                />
-            )}
-            <br />
-            {/* Friends List */}
-            <h1>Friends</h1>
-            {friends.length > 0 ? (
+    return (
+        <div className='main-div'>
+            <div className='main-content'>
+                <h1>Profile</h1>
+                <CSVUploader />
+                <h1>Welcome, {user?.username}</h1>
+
+                {/* Friend request actions */}
+                {isSignedIn && !isUser && (
+                    <FriendRequest 
+                        sessionUserId={user?.username || user?.id} 
+                        requestUserId={profileData?.username}  
+                    />
+                )}
+                <br />
+                {/* Friends List */}
+                <h1>Friends</h1>
+                {friends.length > 0 ? (
+                    <ul>
+                        {friends.map((friend) => (
+                            <li key={friend.id}>
+                                <p>Username: {friend.friendname}</p>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No friends found.</p>
+                )}
+                <br />
+                {/* Friend requests */}
+                <h1>Friend Requests</h1>
+                <h3>Received Requests</h3>
                 <ul>
-                    {friends.map((friend) => (
-                        <li key={friend.id}>
-                            <p>Username: {friend.friendname}</p>
-                        </li>
-                    ))}
+                    {receivedRequests.length > 0 ? (
+                        receivedRequests.map((request) => (
+                            <li key={`${request.id}-${request.senderUsername}`}>
+                                <RespondRequest 
+                                    key={request.id} 
+                                    senderUsername={request.senderUserName} 
+                                    receiverUserName={request.receiverUserName} 
+                                />
+                            </li>
+                        ))
+                    ) : (
+                        <p>No received friend requests.</p>
+                    )}
                 </ul>
-            ) : (
-                <p>No friends found.</p>
-            )}
-            <br></br>
-            {/* Friend requests */}
-            <h1>Friend Requests</h1>
-            <h3>Received Requests</h3>
-            <ul>
-                {receivedRequests.length > 0 ? (
-                    receivedRequests.map((request) => (
-                        <li key={`${request.id}-${request.senderUsername}`}>
-                            <RespondRequest 
-                                key={request.id} 
-                                senderUsername={request.senderUserName} 
-                                receiverUserName={request.receiverUserName} 
-                            />
-                        </li>
-                    ))
-                ) : (
-                    <p>No received friend requests.</p>
-                )}
-            </ul>
-            <h3>Sent Requests</h3>
-            <ul>
-                {sentRequests.length > 0 ? (
-                    sentRequests.map((request) => (
-                        <li key={request.id}>
-                            To: {request.receiverUserName}
-                        </li>
-                    ))
-                ) : (
-                    <p>No sent friend requests.</p>
-                )}
-            </ul>
+                <h3>Sent Requests</h3>
+                <ul>
+                    {sentRequests.length > 0 ? (
+                        sentRequests.map((request) => (
+                            <li key={request.id}>
+                                To: {request.receiverUserName}
+                            </li>
+                        ))
+                    ) : (
+                        <p>No sent friend requests.</p>
+                    )}
+                </ul>
+            </div>
         </div>
-    )
+    );
 }

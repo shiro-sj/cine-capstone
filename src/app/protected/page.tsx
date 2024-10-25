@@ -1,17 +1,14 @@
-import React from 'react'
-import WatchHistory from '@/app/components/watchHistory'
-import NavBar from '@/app/components/navbar'
-import SearchBar from '@/app/components/searchBar'
+"use client"
+import React, { useState } from 'react'
+import Sidebar from '@/app/components/sidebars/sidebar'
+import Subsidebar from '../components/sidebars/subsidebar'
+import WatchHistory from '../components/watchHistory'
+import Headroom from 'react-headroom'
 
 export default function Home(){
-
-    const {user} = useUser();
-
     return(
-        <div className=''>
-            <NavBar/>
-            <SearchBar/>
-            <WatchHistory/>
+       
+        <div className='main-div'>
         </div>
     )
 };

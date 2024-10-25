@@ -1,18 +1,13 @@
 import { prisma } from '@/lib/prisma';
-
-
-import { currentUser } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
-    const user = await currentUser();
-    let profileUsername;
-    if (user){
-        profileUsername = user.username;
-    }
+    
+  const { searchParams } = new URL(request.url);
+  const profileUsername = searchParams.get('username');
+
   if (!profileUsername) {
     return NextResponse.json({ error: 'Invalid or missing username' }, { status: 400 });
   }
-
   //user info
   try {    
     const user = await prisma.user.findFirst({
@@ -21,7 +16,6 @@ export async function GET(request: Request) {
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
-
     const friends = await prisma.friend.findMany({
       where: {
         username: profileUsername   // Assuming `username` is a field in your `Friend` model
@@ -30,12 +24,10 @@ export async function GET(request: Request) {
         user: true
       }
     });
-
     //sent requests
     const sentFriendRequests = await prisma.friendRequests.findMany({
       where: {senderUserName: profileUsername}
     })
-
     //recieved requests
     const  recievedFriendRequests = await prisma.friendRequests.findMany({
       where: {receiverUserName: profileUsername}

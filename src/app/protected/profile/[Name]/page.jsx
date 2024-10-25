@@ -1,8 +1,8 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
-import FriendRequest from '../../../components/friendRequest';
-import RespondRequest from '../../../components/respondRequests';
+import RespondRequest from '@/app/components/respondRequest';
+import NavBar from '@/app/components/navbar';
 
 export default function ProfilePage({ params }) {
     const { user, isSignedIn } = useUser();

@@ -38,3 +38,11 @@ export interface Entry{
 export interface StatsProps {
   view: string;
 }
+
+export interface SidebarProps {
+  sidebarSelection: (type: string) => void;
+}
+
+export interface SubsidebarProps {
+  items: string[];
+}

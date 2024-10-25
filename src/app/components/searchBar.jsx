@@ -52,7 +52,7 @@ export default function SearchBar() {
           <ul className="divide-y divide-gray-200">
             {results.map((user) => (
               <li key={user.id} className="hover:bg-gray-100">
-                <a href={`/profile/${user.username}`} className="block px-4 py-2 text-black">
+                <a href={`/protected/profile/${user.username}`} className="block px-4 py-2 text-black">
                   {user.username}
                 </a>
               </li>
