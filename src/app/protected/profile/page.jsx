@@ -1,68 +1,68 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import FriendRequest from '@/app/components/friendRequest';
-import RespondRequest from '@/app/components/respondRequests';
-import CSVUploader from "@/app/components/csvUploader"
-import NavBar from "@/app/components/navbar"
+import RespondRequest from '@/app/components/respondRequest';
+import CSVUploader from "@/app/components/csvUploader";
+import NavBar from "@/app/components/navbar";
 
-
-export default function Profile(){
+export default function Profile() {
     const { user, isSignedIn } = useUser();
-    let username;
-    if (isSignedIn){
-        username = user.username;
-    }
-    
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [receivedRequests, setReceivedRequests] = useState([]);
     const [sentRequests, setSentRequests] = useState([]);
     const [friends, setFriends] = useState([]);
-    
     const [isUser, setIsUser] = useState(false);
+
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await fetch(`/api/profile`);
-                const data = await response.json();
-                if (response.ok) {
-                    setProfileData(data.user);
+                const response = await axios.get('/api/prisma/currentUser');
+                const data = response.data;
+
+                if (response.status === 200) {
+                    setProfileData(data.currentUser);
                     setReceivedRequests(data.recievedFriendRequests || []);
                     setSentRequests(data.sentFriendRequests || []);
                     setFriends(data.friends || []);
+
                     // Check if the profile matches the logged-in user
-                    if (data.user.username === user?.username || data.user.id === user?.id) {
+                    if (data.currentUser.username === user?.username || data.user?.id === user?.id) {
                         setIsUser(true);
                     }
                 } else {
                     setError(data.error || 'An error occurred');
                 }
-                
             } catch (err) {
                 setError("Error fetching profile data");
+                console.error(err);  // Log the error for debugging
             } finally {
                 setLoading(false);
             }
         };
+
         if (user) {
             fetchProfile();
         }
-    }, [username, user]);
+    }, [user]);
+
     if (loading) {
         return <div>Loading...</div>;
     }
     if (error) {
         return <div>Error: {error}</div>;
     }
-    return(
-        <div>
-            <NavBar/>
-            <h1>Profile</h1>
-            <CSVUploader/>
 
-            <h1>Welcome, {username}</h1>
+    return (
+        <div>
+            <NavBar />
+            <h1>Profile</h1>
+            <CSVUploader />
+            <h1>Welcome, {user?.username}</h1>
+
             {/* Friend request actions */}
             {isSignedIn && !isUser && (
                 <FriendRequest 
@@ -84,7 +84,7 @@ export default function Profile(){
             ) : (
                 <p>No friends found.</p>
             )}
-            <br></br>
+            <br />
             {/* Friend requests */}
             <h1>Friend Requests</h1>
             <h3>Received Requests</h3>
@@ -116,5 +116,5 @@ export default function Profile(){
                 )}
             </ul>
         </div>
-    )
+    );
 }

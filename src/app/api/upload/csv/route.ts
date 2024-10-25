@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { Data } from "@/lib/interfaces";
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 
 
 export async function POST(request: NextRequest) {
@@ -10,9 +10,11 @@ export async function POST(request: NextRequest) {
     const csvData: Data[] = await request.json();
     console.log('Received CSV Data:', csvData); 
 
-    const {userId} = auth();
 
-    if (userId) {
+    const user = await currentUser();
+    const userId = user?.id;
+
+    if (user) {
       const userRecord = await prisma.user.findUnique({
         where: { clerkId: userId},  
       });
@@ -59,15 +61,6 @@ export async function POST(request: NextRequest) {
     }
     
 
-    // const {userId, isLoaded} = useAuth();
-
-    // Adding data to clerk
-        
-     
-
-      
-    
-
     return new Response(JSON.stringify({ message: 'CSV data processed successfully', status: 200 }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
@@ -83,12 +76,33 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-    try {
-      const watchHistoryData = await prisma.watchHistory.findMany();
-      return NextResponse.json({ watchHistoryData });
-    } catch (e) {
-      console.error('Error fetching data:', e);
-      return new Response(JSON.stringify({message:'Error while fetching data', status:500})
-      );
+  const user = await currentUser();
+  const userId = user?.id;
+  const userRecord = await prisma.user.findUnique({
+    where: { clerkId: userId},  
+  });
+
+  if (userRecord){
+    const currentUserID = userRecord.id; 
+
+    if(currentUserID){
+      try {
+        const watchHistoryData = await prisma.watchHistory.findMany({
+          where:{
+            userId: currentUserID
+          }
+        });
+        return NextResponse.json({ watchHistoryData });
+      } catch (e) {
+        console.error('Error fetching data:', e);
+        return new Response(JSON.stringify({message:'Error while fetching data', status:500})
+        );
+      }
+  
     }
+  }
+
+
+  
+    
   };
