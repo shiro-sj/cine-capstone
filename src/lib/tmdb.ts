@@ -3,6 +3,17 @@ import axios from "axios";
 const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
   //function for comparing strings (using jaccard similarity index)
+
+export async function fetchPoster(pathURL: string, size:string, path: string){
+    try{
+        const response = await axios.get(`${pathURL}/${size}${path}`)
+        return response.data;
+    }catch{
+        console.error('failed to fetch image data.')
+    }
+
+}
+
 export function jaccardCompare(str1: string, str2: string){
     let string1 = str1.toLowerCase().split(/\W+/)
     let string2 = str2.toLowerCase().split(/\W+/)
@@ -22,7 +33,7 @@ export async function searchMovieID(searchUrl: string, title:string){
           query:title
         }
       })
-      return response.data.results[0].id;
+      return response.data.results[0].id.toString();
     } catch (e) {
     //   console.error(`Error fetching movie ID for ${title} `,e)
       
@@ -37,13 +48,9 @@ try {
     }
     })
 
-    if (response.data.results.length >1){
-        console.log(`found more than one result for ${title}`)
-    }
-
     for (let result in response.data.results){
     if (title === response.data.results[result].name || title === response.data.results[result].original_name){
-        return response.data.results[result].id
+        return response.data.results[result].id.toString()
     }
     }
 
@@ -83,7 +90,7 @@ try {
 
 
 //function for fetching movies by id from TMDB
-export async function findMovieByID(findUrl:String, id:string |null){
+export async function findMovieByID(findUrl:String, id:string|null){
 try{
     const response = await axios.get(`${findUrl}/movie/${id}`, {
     params:{

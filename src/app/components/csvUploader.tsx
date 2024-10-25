@@ -1,14 +1,14 @@
+"use client"
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import { parseCSV } from '@/lib/csv';
-
-
+import { Data } from '@/lib/interfaces';
 
 
 export default function CSVUploader() {
 
-  const [csvData, setCsvData] = useState<{ title: string; watchedAt: string; isTvShow: boolean; id: string; data:{} }[]>([]);
+  const [csvData, setCsvData] = useState<Data[]>([]);
 
   const handleDrop = async (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -18,11 +18,12 @@ export default function CSVUploader() {
         const content = e.target?.result as string;
         
         // wait for CSV parsing to complete
-        await parseCSV(content);
+        const parsedData = await parseCSV(content);
+        setCsvData(parsedData);
         
         // upload CSV data
         try {
-          const response = await axios.post('/api/upload/csv', csvData, {
+          const response = await axios.post('/api/upload/csv', parsedData, {
             headers: {
               'Content-Type': 'application/json',
             },
