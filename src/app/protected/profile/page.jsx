@@ -5,30 +5,8 @@ import axios from 'axios';
 import FriendRequest from '@/app/components/friendRequest';
 import RespondRequest from '@/app/components/respondRequest';
 import CSVUploader from "@/app/components/csvUploader";
-import Sidebar from '@/app/components/sidebars/sidebar';
-import Subsidebar from '@/app/components/sidebars/subsidebar';
 
 export default function Profile() {
-
-    const [subItems, setSubItems] = useState([])
-
-    const handleSidebarClick = (type) => {
-        switch (type) {
-          case 'stats':
-            setSubItems(['month', 'year', 'lifetime', 'history']);
-            break;
-          case 'profile':
-            setSubItems(['profile']);
-            break;
-          case 'extras':
-            setSubItems(['', 'extra2']);
-            break;
-          default:
-            setSubItems(['search', 'friends', 'log', 'diary' ]);
-        }
-      };
-
-
     const { user, isSignedIn } = useUser();
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -76,7 +54,6 @@ export default function Profile() {
     if (error) {
         return <div>Error: {error}</div>;
     }
-
     return (
         <div className='main-div'>
             <div className='main-content'>
@@ -90,6 +67,7 @@ export default function Profile() {
                         sessionUserId={user?.username || user?.id} 
                         requestUserId={profileData?.username}  
                     />
+
                 )}
                 <br />
                 {/* Friends List */}
