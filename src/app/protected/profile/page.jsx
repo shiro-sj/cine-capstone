@@ -2,10 +2,10 @@
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import FriendRequest from '@/app/components/friendRequest';
-import RespondRequest from '@/app/components/respondRequest';
-import CSVUploader from "@/app/components/csvUploader";
+import FriendRequest from '@/app/components/friends/FriendRequest';
 import NavBar from "@/app/components/navbar";
+import FriendsList from '@/app/components/friends/FriendsList';
+import FriendRequestList from '../../components/friends/FriendRequestList';
 
 export default function Profile() {
     const { user, isSignedIn } = useUser();
@@ -59,62 +59,43 @@ export default function Profile() {
     return (
         <div>
             <NavBar />
-            <h1>Profile</h1>
-            <CSVUploader />
-            <h1>Welcome, {user?.username}</h1>
-
-            {/* Friend request actions */}
-            {isSignedIn && !isUser && (
-                <FriendRequest 
-                    sessionUserId={user?.username || user?.id} 
-                    requestUserId={profileData?.username}  
-                />
-            )}
-            <br />
-            {/* Friends List */}
-            <h1>Friends</h1>
-            {friends.length > 0 ? (
-                <ul>
-                    {friends.map((friend) => (
-                        <li key={friend.id}>
-                            <p>Username: {friend.friendname}</p>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No friends found.</p>
-            )}
-            <br />
-            {/* Friend requests */}
-            <h1>Friend Requests</h1>
-            <h3>Received Requests</h3>
-            <ul>
-                {receivedRequests.length > 0 ? (
-                    receivedRequests.map((request) => (
-                        <li key={`${request.id}-${request.senderUsername}`}>
-                            <RespondRequest 
-                                key={request.id} 
-                                senderUsername={request.senderUserName} 
-                                receiverUserName={request.receiverUserName} 
+            <div className='p-7'>
+                <div className='flex justify-between'>
+                    <div className='flex items-center'>
+                        <img 
+                            src={user?.imageUrl} 
+                            alt="description of image" 
+                            className='w-24 h-24 rounded-full object-cover'
+                        />
+                        <div className='ml-3'>
+                            <h1 className='font-semibold text-xl'>{user?.username}</h1>
+                            <FriendsList friends={friends} isUser = {isUser}/>
+                        </div>
+                    </div>
+                    {/* Friend requests positioned on the top right */}
+                    {isSignedIn && !isUser && (
+                        <div className='ml-auto'>
+                            <FriendRequest 
+                                sessionUserId={user?.username || user?.id} 
+                                requestUserId={profileData?.username}  
                             />
-                        </li>
-                    ))
-                ) : (
-                    <p>No received friend requests.</p>
-                )}
-            </ul>
-            <h3>Sent Requests</h3>
-            <ul>
-                {sentRequests.length > 0 ? (
-                    sentRequests.map((request) => (
-                        <li key={request.id}>
-                            To: {request.receiverUserName}
-                        </li>
-                    ))
-                ) : (
-                    <p>No sent friend requests.</p>
-                )}
-            </ul>
+                        </div>
+                    )}
+                    <div className='mt-5'>
+                        <FriendRequestList receivedRequests={receivedRequests} sentRequests={sentRequests} />
+                    </div>
+                </div>
+                <br />
+
+                <div>
+                    <h1>Favorites</h1>
+
+                    <h1>Watchlist</h1>
+
+                    <h1>Stats</h1>
+                </div>
+                
+            </div>
         </div>
     );
 }

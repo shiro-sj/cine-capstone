@@ -1,8 +1,9 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
-import RespondRequest from '@/app/components/respondRequest';
 import NavBar from '@/app/components/navbar';
+import FriendRequest from '../../../components/friends/friendRequest';
+import FriendsList from '../../../components/friends/FriendsList';
 
 export default function ProfilePage({ params }) {
     const { user, isSignedIn } = useUser();
@@ -11,8 +12,6 @@ export default function ProfilePage({ params }) {
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [receivedRequests, setReceivedRequests] = useState([]);
-    const [sentRequests, setSentRequests] = useState([]);
     const [friends, setFriends] = useState([]);
     
     const [isUser, setIsUser] = useState(false);
@@ -25,8 +24,6 @@ export default function ProfilePage({ params }) {
 
                 if (response.ok) {
                     setProfileData(data.user);
-                    setReceivedRequests(data.recievedFriendRequests || []);
-                    setSentRequests(data.sentFriendRequests || []);
                     setFriends(data.friends || []);
 
                     // Check if the profile matches the logged-in user
@@ -61,64 +58,27 @@ export default function ProfilePage({ params }) {
     return (
         <div>
             <NavBar/>
-            <h1>Profile of {profileData?.username}</h1>
-            <h3>You are: {user?.username || user?.id}</h3> {/* Fallback to id if username is not available */}
-
-            {/* Friend request actions */}
-            {isSignedIn && !isUser && (
-                <FriendRequest 
-                    sessionUserId={user?.username || user?.id} 
-                    requestUserId={profileData?.username}  
-                />
-            )}
-
-            <br />
-            {/* Friends List */}
-            <h1>Friends</h1>
-            {friends.length > 0 ? (
-                <ul>
-                    {friends.map((friend) => (
-                        <li key={friend.id}>
-                            <p>Username: {friend.friendname}</p>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No friends found.</p>
-            )}
-
-            <br></br>
-            {/* Friend requests */}
-            <h1>Friend Requests</h1>
-            <h3>Received Requests</h3>
-            <ul>
-                {receivedRequests.length > 0 ? (
-                    receivedRequests.map((request) => (
-                        <li key={`${request.id}-${request.senderUsername}`}>
-                            <RespondRequest 
-                                key={request.id} 
-                                senderUsername={request.senderUserName} 
-                                receiverUserName={request.receiverUserName} 
+            <div className='p-5'>
+                <div className='flex justify-between'>
+                    <div>
+                        <h1 className='text-2xl font-semibold'>Profile of {profileData?.username}</h1>
+                        <h3 className='text-lg'>You are: {user?.username || user?.id}</h3>
+                    </div>
+                    {/* Friend request actions */}
+                    {isSignedIn && !isUser && (
+                        <div className='ml-auto'>
+                            <FriendRequest 
+                                sessionUserId={user?.username || user?.id} 
+                                requestUserId={profileData?.username}  
                             />
-                        </li>
-                    ))
-                ) : (
-                    <p>No received friend requests.</p>
-                )}
-            </ul>
-
-            <h3>Sent Requests</h3>
-            <ul>
-                {sentRequests.length > 0 ? (
-                    sentRequests.map((request) => (
-                        <li key={request.id}>
-                            To: {request.receiverUserName}
-                        </li>
-                    ))
-                ) : (
-                    <p>No sent friend requests.</p>
-                )}
-            </ul>
+                        </div>
+                    )}
+                </div>
+                <br />
+                {/* Friends List */}
+                    <FriendsList friends={friends} />
+                <br />
+            </div>
         </div>
     );
 }
