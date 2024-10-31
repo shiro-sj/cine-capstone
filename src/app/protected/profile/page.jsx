@@ -2,10 +2,18 @@
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 import CSVUploader from '@/components/statistics/csvUploader';
 
 export default function Profile() {
 
+=======
+import FriendRequest from '@/app/components/friendRequest';
+import RespondRequest from '@/app/components/respondRequest';
+import CSVUploader from "@/app/components/csvUploader";
+
+export default function Profile() {
+>>>>>>> 39b33c88769eecb77bab96a1ee8a96fb96f1a7f6
     const { user, isSignedIn } = useUser();
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -53,7 +61,6 @@ export default function Profile() {
     if (error) {
         return <div>Error: {error}</div>;
     }
-
     return (
         <div className='main-div'>
             <div className='main-content'>
@@ -67,6 +74,7 @@ export default function Profile() {
                         sessionUserId={user?.username || user?.id} 
                         requestUserId={profileData?.username}  
                     />
+
                 )}
                 <br />
                 {/* Friends List */}
