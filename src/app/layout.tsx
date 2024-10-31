@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import Sidebar from "./components/sidebars/sidebar";
-import Subsidebar from "./components/sidebars/subsidebar";
-import Headroom from 'react-headroom';
+import NavBar from "@/components/ui/navbar";
 
 export const metadata: Metadata = {
   title: "cine",
@@ -19,11 +17,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
-            <Sidebar/>
+          <NavBar/>
           <main>
             {children}
           </main>
-          <Subsidebar/>
         </body>
       </html>      
     </ClerkProvider>

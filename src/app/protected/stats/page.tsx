@@ -1,7 +1,5 @@
 "use client"
-import Sidebar from "@/app/components/sidebars/sidebar";
-import Subsidebar from "@/app/components/sidebars/subsidebar";
-import Stats from "@/app/components/stats";
+import Stats from "@/components/statistics/stats";
 import { UserButton } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 

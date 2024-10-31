@@ -2,32 +2,9 @@
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import FriendRequest from '@/app/components/friendRequest';
-import RespondRequest from '@/app/components/respondRequest';
-import CSVUploader from "@/app/components/csvUploader";
-import Sidebar from '@/app/components/sidebars/sidebar';
-import Subsidebar from '@/app/components/sidebars/subsidebar';
+import CSVUploader from '@/components/statistics/csvUploader';
 
 export default function Profile() {
-
-    const [subItems, setSubItems] = useState([])
-
-    const handleSidebarClick = (type) => {
-        switch (type) {
-          case 'stats':
-            setSubItems(['month', 'year', 'lifetime', 'history']);
-            break;
-          case 'profile':
-            setSubItems(['profile']);
-            break;
-          case 'extras':
-            setSubItems(['', 'extra2']);
-            break;
-          default:
-            setSubItems(['search', 'friends', 'log', 'diary' ]);
-        }
-      };
-
 
     const { user, isSignedIn } = useUser();
     const [profileData, setProfileData] = useState(null);
