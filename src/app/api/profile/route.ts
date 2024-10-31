@@ -18,12 +18,13 @@ export async function GET(request: Request) {
     }
     const friends = await prisma.friend.findMany({
       where: {
-        username: profileUsername   // Assuming `username` is a field in your `Friend` model
+        username: profileUsername
       },
       include: {
         user: true
       }
     });
+    
     //sent requests
     const sentFriendRequests = await prisma.friendRequests.findMany({
       where: {senderUserName: profileUsername}

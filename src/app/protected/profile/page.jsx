@@ -6,6 +6,7 @@ import FriendRequest from '@/app/components/friends/FriendRequest';
 import NavBar from "@/app/components/navbar";
 import FriendsList from '@/app/components/friends/FriendsList';
 import FriendRequestList from '../../components/friends/FriendRequestList';
+import CSVUploader from '@/app/components/csvUploader';
 
 export default function Profile() {
     const { user, isSignedIn } = useUser();
@@ -86,7 +87,7 @@ export default function Profile() {
                     </div>
                 </div>
                 <br />
-
+                <CSVUploader/>
                 <div>
                     <h1>Favorites</h1>
 
