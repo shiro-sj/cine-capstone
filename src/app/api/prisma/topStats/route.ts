@@ -80,6 +80,21 @@ export async function GET() {
         }
     }
 
+    async function  getTopGenre(userId: number){
+        try {
+            const genreList = await prisma.watchHistory.findMany({
+                select:{genres: true}
+            })
+
+            const genreMapped = genreList.flatMap((genre)=>genre.genres);
+
+            return genreMapped;
+        }catch{
+
+        }
+
+    }
+
     if (!user) {
         return NextResponse.json({ error: "User not authenticated" }, { status: 401 });
     }
@@ -95,11 +110,13 @@ export async function GET() {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
+
+        const topGenre = await getTopGenre(userRecord.id)
         const topTVShow = await getTopTVShow(userRecord.id);
         const topMovie = await getTopMovie(userRecord.id)
         const topTitle = await getTopTitle(userRecord.id)
 
-        return NextResponse.json({ topTVShow, topMovie, topTitle }); 
+        return NextResponse.json({ topGenre, topTVShow, topMovie, topTitle }); 
     } catch (error) {
         console.error("Error fetching user details:", error);
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });

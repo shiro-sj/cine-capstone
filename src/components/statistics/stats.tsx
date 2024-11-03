@@ -53,7 +53,7 @@ export default function Stats ({view}: StatsProps) {
     return(
         <div>
             <h2>Stats:</h2>
-            <h3>Total Watch Time: {totalWatchTime}</h3>
+            <h3>Total Watch Time: {totalWatchTime} minutes</h3>
             {view === "Movie" && (
                 <p>Top Movie: {topMovie} ({topMovieCount} views)</p>
             )}

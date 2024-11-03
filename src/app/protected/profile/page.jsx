@@ -2,12 +2,18 @@
 import { useUser } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
+import CSVUploader from '@/components/statistics/csvUploader';
+
+export default function Profile() {
+
+=======
 import FriendRequest from '@/app/components/friendRequest';
 import RespondRequest from '@/app/components/respondRequest';
 import CSVUploader from "@/app/components/csvUploader";
-import NavBar from "@/app/components/navbar";
 
 export default function Profile() {
+>>>>>>> 39b33c88769eecb77bab96a1ee8a96fb96f1a7f6
     const { user, isSignedIn } = useUser();
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -55,66 +61,67 @@ export default function Profile() {
     if (error) {
         return <div>Error: {error}</div>;
     }
-
     return (
-        <div>
-            <NavBar />
-            <h1>Profile</h1>
-            <CSVUploader />
-            <h1>Welcome, {user?.username}</h1>
+        <div className='main-div'>
+            <div className='main-content'>
+                <h1>Profile</h1>
+                <CSVUploader />
+                <h1>Welcome, {user?.username}</h1>
 
-            {/* Friend request actions */}
-            {isSignedIn && !isUser && (
-                <FriendRequest 
-                    sessionUserId={user?.username || user?.id} 
-                    requestUserId={profileData?.username}  
-                />
-            )}
-            <br />
-            {/* Friends List */}
-            <h1>Friends</h1>
-            {friends.length > 0 ? (
+                {/* Friend request actions */}
+                {isSignedIn && !isUser && (
+                    <FriendRequest 
+                        sessionUserId={user?.username || user?.id} 
+                        requestUserId={profileData?.username}  
+                    />
+
+                )}
+                <br />
+                {/* Friends List */}
+                <h1>Friends</h1>
+                {friends.length > 0 ? (
+                    <ul>
+                        {friends.map((friend) => (
+                            <li key={friend.id}>
+                                <p>Username: {friend.friendname}</p>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No friends found.</p>
+                )}
+                <br />
+                {/* Friend requests */}
+                <h1>Friend Requests</h1>
+                <h3>Received Requests</h3>
                 <ul>
-                    {friends.map((friend) => (
-                        <li key={friend.id}>
-                            <p>Username: {friend.friendname}</p>
-                        </li>
-                    ))}
+                    {receivedRequests.length > 0 ? (
+                        receivedRequests.map((request) => (
+                            <li key={`${request.id}-${request.senderUsername}`}>
+                                <RespondRequest 
+                                    key={request.id} 
+                                    senderUsername={request.senderUserName} 
+                                    receiverUserName={request.receiverUserName} 
+                                />
+                            </li>
+                        ))
+                    ) : (
+                        <p>No received friend requests.</p>
+                    )}
                 </ul>
-            ) : (
-                <p>No friends found.</p>
-            )}
-            <br />
-            {/* Friend requests */}
-            <h1>Friend Requests</h1>
-            <h3>Received Requests</h3>
-            <ul>
-                {receivedRequests.length > 0 ? (
-                    receivedRequests.map((request) => (
-                        <li key={`${request.id}-${request.senderUsername}`}>
-                            <RespondRequest 
-                                key={request.id} 
-                                senderUsername={request.senderUserName} 
-                                receiverUserName={request.receiverUserName} 
-                            />
-                        </li>
-                    ))
-                ) : (
-                    <p>No received friend requests.</p>
-                )}
-            </ul>
-            <h3>Sent Requests</h3>
-            <ul>
-                {sentRequests.length > 0 ? (
-                    sentRequests.map((request) => (
-                        <li key={request.id}>
-                            To: {request.receiverUserName}
-                        </li>
-                    ))
-                ) : (
-                    <p>No sent friend requests.</p>
-                )}
-            </ul>
+                <h3>Sent Requests</h3>
+                <ul>
+                    {sentRequests.length > 0 ? (
+                        sentRequests.map((request) => (
+                            <li key={request.id}>
+                                To: {request.receiverUserName}
+                            </li>
+                        ))
+                    ) : (
+                        <p>No sent friend requests.</p>
+                    )}
+                </ul>
+            </div>
         </div>
     );
 }

@@ -1,10 +1,10 @@
 "use client"
-import NavBar from "@/app/components/navbar";
-import Stats from "@/app/components/stats";
+import Stats from "@/components/statistics/stats";
 import { UserButton } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 
 export default function StatsPage(){
+
     const [view, setView] = useState("All")
     function setAll(){
         setView("All")
@@ -17,14 +17,11 @@ export default function StatsPage(){
     }
 
     return(
-        <div className="">
-            <NavBar/>
-            <div>
+        <div className="main-div">
                 <button onClick={(setAll)}>All</button>
                 <button onClick={(setMovie)}>Movie</button>
                 <button onClick={(setTV)}>TV</button>
-            </div>
-            <Stats view={view}/>
+                <Stats view={view}/>
         </div>
     )
 

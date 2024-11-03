@@ -37,8 +37,6 @@ export const parseCSV = (content: string) => {
               let episodeDetails;
               let details;
               let genres = [];
-
-              let path: string = "";
               let posterPath: string = "";
 
               let releaseDate:Date;

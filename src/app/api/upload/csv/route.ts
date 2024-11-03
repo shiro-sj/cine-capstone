@@ -54,10 +54,14 @@ export async function POST(request: NextRequest) {
       })
     ); 
 
-    await prisma.watchHistory.deleteMany({});
+    await prisma.watchHistory.deleteMany({
+      where:{
+        userId:currentUserID
+      }
+    });
      
-    await prisma.watchHistory.createMany({data: watchHistoryData})
-      
+    await prisma.watchHistory.createMany({ 
+      data: watchHistoryData })
     }
     
 

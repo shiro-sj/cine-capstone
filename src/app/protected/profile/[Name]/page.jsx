@@ -60,7 +60,6 @@ export default function ProfilePage({ params }) {
 
     return (
         <div>
-            <NavBar/>
             <h1>Profile of {profileData?.username}</h1>
             <h3>You are: {user?.username || user?.id}</h3> {/* Fallback to id if username is not available */}
 
