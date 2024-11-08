@@ -8,7 +8,6 @@ export default function Home(){
 
     return(
         <div className=''>
-            <UserButton/>
             <NavBar/>
             <SearchBar/>
             <WatchHistory/>

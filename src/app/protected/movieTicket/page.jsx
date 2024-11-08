@@ -10,7 +10,7 @@ import Receipt from "@/app/components/dynamicImages/recipt"
 
 export default function Page() {
     const svgRef = useRef();
-    const { isSignedIn } = useUser();
+    const { user,isSignedIn } = useUser();
     const [movieTitle, setMovieTitle] = useState('');
     const [watchedTime, setWatchTime] = useState('');
     const [timeline, setTimeline] = useState('');
@@ -78,13 +78,14 @@ export default function Page() {
     return (
         <div>
             <NavBar/>
-            
-            <div ref={svgRef}>
-                {(movieStyle) && <MovieTicket movieTitle={movieTitle} watchedTime={watchedTime} />}
-                {reciptStyle && <Receipt itemsString="Item 1, Item 2, Item 3" total={26.47} date="2024-10-29" />
-            }
+            <div ref={svgRef} style={{ backgroundColor:"#000000"}}>
+                
+                {movieStyle && <MovieTicket movieTitle={'The Fast and the Furious: Tokyo Drift'} watchedDate={'24/03/04'} />}
+                {reciptStyle && <Receipt user = {user} movieTitle ={"The Fast and the Furious: Tokyo Drift"} watchDate ={'24/03/04'}/>}
                 
             </div>
+
+
             <button onClick={handleDownload}>Download as PNG</button>
 
             <div>

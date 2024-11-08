@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/nextjs": "^5.7.2",
     "@prisma/client": "^5.21.1",
+    "@resvg/resvg-js": "^2.6.2",
     "@vercel/postgres": "^0.10.0",
     "axios": "^1.7.7",
     "next": "14.2.14",
@@ -19,7 +20,9 @@
     "papaparse": "^5.4.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-dropzone": "^14.2.9"
+    "react-dropzone": "^14.2.9",
+    "resvg": "^1.6.4",
+    "satori": "^0.11.3"
   },
   "devDependencies": {
     "@types/node": "^20",
